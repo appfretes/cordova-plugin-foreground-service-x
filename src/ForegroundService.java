@@ -26,7 +26,7 @@ public class ForegroundService extends Service {
         String input = intent.getStringExtra("inputExtra");
         createNotificationChannel();
         Intent notificationIntent = new Intent(ForegroundService.this, io.cordova.hellocordova.MainActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(ForegroundService.this,
+        PendingIntent pendingIntent = PendingIntent.getActivity(context,
                 0, notificationIntent, 0);
         Notification notification = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setContentTitle("Application")
@@ -35,10 +35,16 @@ public class ForegroundService extends Service {
                 .setContentIntent(pendingIntent)
                 .build();
         startForeground(1, notification);
+        
         //do heavy work on a background thread
         //stopSelf();
         return START_NOT_STICKY;
+        //chamar funcao
     }
+
+// funcao
+// 
+//
 
     @Override
     public void onDestroy() {
