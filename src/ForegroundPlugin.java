@@ -26,7 +26,7 @@ public class ForegroundPlugin extends CordovaPlugin {
     }
 
     private void startService() {
-        Context context = getApplicationContext();
+        Context context = cordova.getActivity().getApplicationContext(); 
         Activity activity = cordova.getActivity();
         Intent serviceIntent = new Intent(activity, ForegroundService.class);
         serviceIntent.putExtra("inputExtra", "Foreground Service Example in Android");
