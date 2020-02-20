@@ -1,4 +1,4 @@
-package  com.marcosnielsen.foreground;
+package  com.softniels.foregroundservicex;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,11 +10,11 @@ public class SyncEvents {
 //   private int quantidade;
   
   public SyncEvents() {
-    Log.i('TESTE RAFAEL', 'TESTE RAFAEL CONSTRUTOR');
+    Log.i("TESTE RAFAEL", "TESTE RAFAEL CONSTRUTOR");
   }
   
   public void sincronizarEventos() {
     // Código do método
-    Log.i('TESTE RAFAEL', 'TESTE RAFAEL sincronizarEventos');
+    Log.i("TESTE RAFAEL", "TESTE RAFAEL sincronizarEventos");
   }  
 }
