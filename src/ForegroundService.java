@@ -37,9 +37,9 @@ public class ForegroundService extends Service {
         startForeground(1, notification);
         
         // Fazer capturas em segundo plano e gravar
-        //
+        // 
         // Verificar se entrou na cerca
-        //
+        // 
         // Sincronizar eventos
         SyncEvents sincronizador = new SyncEvents();
         sincronizador.sincronizarEventos();

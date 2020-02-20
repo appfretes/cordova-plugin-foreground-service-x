@@ -16,5 +16,5 @@ public class SyncEvents {
   public void sincronizarEventos() {
     // Código do método
     Log.i(TAG, "TESTE RAFAEL sincronizarEventos");
-  }  
+  }
 }
