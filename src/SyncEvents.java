@@ -5,16 +5,16 @@ import android.content.Intent;
 import android.util.Log;
 
 public class SyncEvents {
-
+  private static final String TAG = "MyActivityTeste";
 //   private String nome;
 //   private int quantidade;
   
   public SyncEvents() {
-    Log.i("TESTE RAFAEL", "TESTE RAFAEL CONSTRUTOR");
+    Log.i(TAG, "TESTE RAFAEL CONSTRUTOR");
   }
   
   public void sincronizarEventos() {
     // Código do método
-    Log.i("TESTE RAFAEL", "TESTE RAFAEL sincronizarEventos");
+    Log.i(TAG, "TESTE RAFAEL sincronizarEventos");
   }  
 }
