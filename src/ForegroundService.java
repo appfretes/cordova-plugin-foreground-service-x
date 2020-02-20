@@ -36,15 +36,18 @@ public class ForegroundService extends Service {
                 .build();
         startForeground(1, notification);
         
+        // Fazer capturas em segundo plano e gravar
+        //
+        // Verificar se entrou na cerca
+        //
+        // Sincronizar eventos
+        SyncEvents sincronizador = new SyncEvents();
+        sincronizador.sincronizarEventos();
+
         //do heavy work on a background thread
         //stopSelf();
         return START_NOT_STICKY;
-        //chamar funcao
     }
-
-// funcao
-// 
-//
 
     @Override
     public void onDestroy() {

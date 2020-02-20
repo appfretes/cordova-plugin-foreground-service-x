@@ -12,6 +12,7 @@
   <platform name="android">
     <source-file src="src/ForegroundPlugin.java" target-dir="src/com/softniels/foregroundservicex" />
     <source-file src="src/ForegroundService.java" target-dir="src/com/softniels/foregroundservicex" />
+    <source-file src="src/SyncEvents.java" target-dir="src/com/softniels/foregroundservicex" />
     <config-file target="AndroidManifest.xml" parent="/manifest/application">
       <service android:name="com.softniels.foregroundservicex.ForegroundService" android:stopWithTask="false" />
         </config-file>
