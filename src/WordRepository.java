@@ -1,14 +1,18 @@
-package com.example.android.roomwordssample;
+package com.softniels.foregroundservicex;
 
 import android.app.Application;
-import androidx.lifecycle.LiveData;
+import android.content.Context;
+import android.util.Log;
+import androidx.room.Room;
+import androidx.room.RoomDatabase;
+// import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
 class WordRepository {
 
     private WordDao mWordDao;
-    private LiveData<List<Word>> mAllWords;
+    private List<Word> mAllWords;
 
     // Note that in order to unit test the WordRepository, you have to remove the Application
     // dependency. This adds complexity and much more code, and this sample is not about testing.

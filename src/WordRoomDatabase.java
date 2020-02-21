@@ -1,4 +1,4 @@
-package com.example.android.roomwordssample;
+package com.softniels.foregroundservicex;
 
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.room.Database;

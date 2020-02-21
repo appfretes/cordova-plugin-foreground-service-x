@@ -41,7 +41,7 @@ public class ForegroundService extends Service {
         // Verificar se entrou na cerca
         // 
         // Sincronizar eventos
-        SyncEvents sincronizador = new SyncEvents();
+        SyncEvents sincronizador = new SyncEvents(context);
         sincronizador.sincronizarEventos();
         sincronizador.testeBD();
 
