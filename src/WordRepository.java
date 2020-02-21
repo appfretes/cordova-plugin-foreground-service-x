@@ -18,16 +18,14 @@ class WordRepository {
     // dependency. This adds complexity and much more code, and this sample is not about testing.
     // See the BasicSample in the android-architecture-components repository at
     // https://github.com/googlesamples
-    WordRepository(Application application) {
+    WordRepository(Context application) {
         WordRoomDatabase db = WordRoomDatabase.getDatabase(application);
         mWordDao = db.wordDao();
-        mAllWords = mWordDao.getAlphabetizedWords();
+        //mAllWords = mWordDao.getAlphabetizedWords();
     }
 
-    // Room executes all queries on a separate thread.
-    // Observed LiveData will notify the observer when the data has changed.
-    LiveData<List<Word>> getAllWords() {
-        return mAllWords;
+    List<Word> getAllWords(){
+        return mWordDao.getAlphabetizedWords();
     }
 
     // You must call this on a non-UI thread or your app will throw an exception. Room ensures
