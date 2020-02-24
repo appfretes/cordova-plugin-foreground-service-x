@@ -17,6 +17,10 @@
     <source-file src="src/WordDao.java" target-dir="src/com/softniels/foregroundservicex" />
     <source-file src="src/WordRepository.java" target-dir="src/com/softniels/foregroundservicex" />
     <source-file src="src/WordRoomDatabase.java" target-dir="src/com/softniels/foregroundservicex" />
+    <source-file src="src/Event.java" target-dir="src/com/softniels/foregroundservicex" />
+    <source-file src="src/EventDao.java" target-dir="src/com/softniels/foregroundservicex" />
+    <source-file src="src/EventRepository.java" target-dir="src/com/softniels/foregroundservicex" />
+    <source-file src="src/AppRoomDatabase.java" target-dir="src/com/softniels/foregroundservicex" />    
     <config-file target="AndroidManifest.xml" parent="/manifest/application">
       <service android:name="com.softniels.foregroundservicex.ForegroundService" android:stopWithTask="false" />
         </config-file>
