@@ -64,4 +64,18 @@ public class SyncEvents {
         Event event = new Event(0, event, value);
         eventBD.insert(event);
     };
+
+    public void getEvents() {
+
+        Log.i(TAG, "INICIANDO TESTE BANCO DE DADOS 'EVENT' ");
+
+        EventRepository eventBD = new EventRepository(context);
+        List<Event> eventList = eventBD.getAll();
+        Log.d(TAG, "Rows Count: " + eventList.size());
+        for (int i = 0; i <= eventList.size() - 1; i++) {
+            Log.d(TAG, "eventList[0]: " + eventList.get(i).getEvent() + " - " + eventList.get(i).getValue());
+        };
+
+        Log.i(TAG, "FINALIZANDO TESTE BANCO DE DADOS 'WORD' ");        
+    };
 }

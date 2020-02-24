@@ -9,5 +9,8 @@ module.exports = {
   },
   insertEvent: function(event, value) {
     exec(null, null, "ForegroundPlugin", "insertEvent", [event || "", value || ""]);
+  },
+  getEvents: function() {
+    exec(null, null, "ForegroundPlugin", "getEvents", []);
   }
 };
