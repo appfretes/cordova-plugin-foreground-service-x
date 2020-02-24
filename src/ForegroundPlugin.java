@@ -43,11 +43,13 @@ public class ForegroundPlugin extends CordovaPlugin {
     }
 
     private void insertEvent(String event, String value){
+        Context context = this.cordova.getActivity().getApplicationContext();
         SyncEvents sincronizador = new SyncEvents(context);
         sincronizador.insertEvent(event, value);
     }
 
     private void getEvents(){
+        Context context = this.cordova.getActivity().getApplicationContext();
         SyncEvents sincronizador = new SyncEvents(context);
         sincronizador.getEvents();
     }

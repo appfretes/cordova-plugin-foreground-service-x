@@ -61,8 +61,8 @@ public class SyncEvents {
 
     public void insertEvent(String event, String value) {
         EventRepository eventBD = new EventRepository(context);
-        Event event = new Event(0, event, value);
-        eventBD.insert(event);
+        Event newEvent = new Event(0, event, value);
+        eventBD.insert(newEvent);
     };
 
     public void getEvents() {
