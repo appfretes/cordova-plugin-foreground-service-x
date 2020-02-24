@@ -36,11 +36,23 @@ public class SyncEvents {
     }
 
     public void testeBD() {
+        // Criar objeto word
         Log.i(TAG, "ENTROU testeBD 1 ");
-        WordRepository bd = new WordRepository(context);
+        //WordRepository bd = new WordRepository(context);
         Log.i(TAG, "ENTROU testeBD 2 ");
         Word word = new Word("Teste");
         Log.i(TAG, "ENTROU testeBD 3 ");
+
+
+        // Criar banco
+        WordRoomDatabase db = Room.databaseBuilder(getApplicationContext(),
+            WordRoomDatabase.class, "wordt_database").build();
+        Log.i(TAG, "ENTROU testeBD 4 ------ ");
+        Log.i(TAG, "ENTROU testeBD 4 ------ ");
+        Log.i(TAG, db);
+        Log.i(TAG, "ENTROU testeBD 4 ------ ");
+        Log.i(TAG, "ENTROU testeBD 4 ------ ");
+
         bd.insert(word);
         Log.i(TAG, "ENTROU testeBD 4 ");
         //bd.getAllWords();

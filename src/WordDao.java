@@ -19,6 +19,9 @@ public interface WordDao {
    @Query("DELETE FROM word_table")
    void deleteAll();
 
-   @Query("SELECT * from word_table ORDER BY word ASC")
-   List<Word> getAlphabetizedWords();
+   @Query("SELECT * FROM word_table")
+   List<Word> getAll();
+
+   @Query("SELECT * FROM word_table LIMIT 1")
+   Word findUnique();
 }
