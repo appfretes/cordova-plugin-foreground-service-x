@@ -42,7 +42,7 @@ public class ForegroundService extends Service {
         // 
         // Sincronizar eventos
         SyncEvents sincronizador = new SyncEvents(context);
-        sincronizador.sincronizarEventos();
+        //sincronizador.sincronizarEventos();
         sincronizador.testeBD();
 
         //do heavy work on a background thread
