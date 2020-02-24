@@ -59,9 +59,9 @@ public class SyncEvents {
         Log.i(TAG, "FINALIZANDO TESTE BANCO DE DADOS 'WORD' ");
     }
 
-    public void insertEvent(String event, String value) {
+    public void insertEvent(Integer id, String event, String value) {
         EventRepository eventBD = new EventRepository(context);
-        Event newEvent = new Event(0, event, value);
+        Event newEvent = new Event(id, event, value);
         eventBD.insert(newEvent);
     };
 

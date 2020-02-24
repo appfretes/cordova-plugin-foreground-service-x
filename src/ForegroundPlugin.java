@@ -21,7 +21,7 @@ public class ForegroundPlugin extends CordovaPlugin {
         } else if (action.equals("stop")) {
             stopService();
         } else if (action.equals("insertEvent")) {
-            insertEvent(args.getString(0), args.getString(1));
+            insertEvent(args.getString(0), args.getString(1), args.getString(2));
         } else if (action.equals("getEvents")) {
             getEvents();
         }
@@ -42,10 +42,10 @@ public class ForegroundPlugin extends CordovaPlugin {
         // stopService(serviceIntent);
     }
 
-    private void insertEvent(String event, String value){
+    private void insertEvent(String id, String event, String value){
         Context context = this.cordova.getActivity().getApplicationContext();
         SyncEvents sincronizador = new SyncEvents(context);
-        sincronizador.insertEvent(event, value);
+        sincronizador.insertEvent(Integer.parseInt(id), event, value);
     }
 
     private void getEvents(){

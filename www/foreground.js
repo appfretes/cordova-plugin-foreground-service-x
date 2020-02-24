@@ -7,8 +7,8 @@ module.exports = {
   stop: function() {
     exec(null, null, "ForegroundPlugin", "stop", []);
   },
-  insertEvent: function(event, value) {
-    exec(null, null, "ForegroundPlugin", "insertEvent", [event || "", value || ""]);
+  insertEvent: function(id, event, value) {
+    exec(null, null, "ForegroundPlugin", "insertEvent", [id || "", event || "", value || ""]);
   },
   getEvents: function() {
     exec(null, null, "ForegroundPlugin", "getEvents", []);

@@ -8,9 +8,9 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "event")
 public class Event {
 
-   //@PrimaryKey
+   //@PrimaryKey(autoGenerate = true)
    @NonNull
-   @PrimaryKey(autoGenerate = true)
+   @PrimaryKey
    @ColumnInfo(name = "id")
    private Integer id;
 
