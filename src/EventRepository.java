@@ -7,28 +7,28 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import java.util.List;
 
-class WordRepository {
+class EventRepository {
 
-    private WordDao mWordDao;
+    private EventDao eventDao;
 
     // Note that in order to unit test the WordRepository, you have to remove the Application
     // dependency. This adds complexity and much more code, and this sample is not about testing.
     // See the BasicSample in the android-architecture-components repository at
     // https://github.com/googlesamples
-    WordRepository(Context context) {
+    EventRepository(Context context) {
         AppRoomDatabase db = AppRoomDatabase.getDatabase(context);
-        mWordDao = db.wordDao();
+        eventDao = db.eventDao();
     }
 
-    List<Word> getAll(){
-        return mWordDao.getAll();
+    List<Event> getAll(){
+        return eventDao.getAll();
     }
 
     // You must call this on a non-UI thread or your app will throw an exception. Room ensures
     // that you're not doing any long running operations on the main thread, blocking the UI.
-    void insert(Word word) {
+    void insert(Event event) {
         AppRoomDatabase.databaseWriteExecutor.execute(() -> {
-            mWordDao.insert(word);
+            EventDao.insert(event);
         });
     }
 }

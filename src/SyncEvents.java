@@ -36,6 +36,7 @@ public class SyncEvents {
     }
 
     public void testeBD() {
+        Log.i(TAG, "INICIANDO TESTE BANCO DE DADOS 'WORD' ");
         WordRepository bd = new WordRepository(context);
         Word word = new Word("dsadsadsa");
         bd.insert(word);
@@ -44,6 +45,17 @@ public class SyncEvents {
         for (int i = 0; i <= wordList.size() - 1; i++) {
             Log.d(TAG, "wordList[0]: " + wordList.get(i).getWord());
         };
-        Log.i(TAG, "ENTROU testeBD 5 ");        
+        Log.i(TAG, "FINALIZANDO TESTE BANCO DE DADOS 'WORD' ");
+
+        Log.i(TAG, "INICIANDO TESTE BANCO DE DADOS 'EVENT' ");
+        EventRepository eventBD = new EventRepository(context);
+        Event event = new Event("CHEGOU_AO_DESTINO", "");
+        eventBD.insert(event);
+        List<Event> eventList = eventBD.getAll();
+        Log.d(TAG, "Rows Count: " + eventList.size());
+        for (int i = 0; i <= eventList.size() - 1; i++) {
+            Log.d(TAG, "eventList[0]: " + eventList.get(i).getEvent() + " - " + eventList.get(i).getValue());
+        };
+        Log.i(TAG, "FINALIZANDO TESTE BANCO DE DADOS 'WORD' ");
     }
 }
