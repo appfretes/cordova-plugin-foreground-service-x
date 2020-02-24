@@ -6,5 +6,8 @@ module.exports = {
   },
   stop: function() {
     exec(null, null, "ForegroundPlugin", "stop", []);
+  },
+  insertEvent: function(event, value) {
+    exec(null, null, "ForegroundPlugin", "insertEvent", [event || "", value || ""]);
   }
 };

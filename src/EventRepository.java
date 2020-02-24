@@ -28,7 +28,7 @@ class EventRepository {
     // that you're not doing any long running operations on the main thread, blocking the UI.
     void insert(Event event) {
         AppRoomDatabase.databaseWriteExecutor.execute(() -> {
-            EventDao.insert(event);
+            eventDao.insert(event);
         });
     }
 }

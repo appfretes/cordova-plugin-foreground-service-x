@@ -49,7 +49,7 @@ public class SyncEvents {
 
         Log.i(TAG, "INICIANDO TESTE BANCO DE DADOS 'EVENT' ");
         EventRepository eventBD = new EventRepository(context);
-        Event event = new Event("CHEGOU_AO_DESTINO", "");
+        Event event = new Event(0, "CHEGOU_AO_DESTINO", "");
         eventBD.insert(event);
         List<Event> eventList = eventBD.getAll();
         Log.d(TAG, "Rows Count: " + eventList.size());
@@ -58,4 +58,10 @@ public class SyncEvents {
         };
         Log.i(TAG, "FINALIZANDO TESTE BANCO DE DADOS 'WORD' ");
     }
+
+    public void insertEvent(String event, String value) {
+        EventRepository eventBD = new EventRepository(context);
+        Event event = new Event(0, event, value);
+        eventBD.insert(event);
+    };
 }

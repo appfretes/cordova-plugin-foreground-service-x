@@ -8,10 +8,11 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "event")
 public class Event {
 
+   //@PrimaryKey
    @NonNull
    @PrimaryKey(autoGenerate = true)
-   @ColumnInfo(name = "id_event")
-   private String id_event;
+   @ColumnInfo(name = "id")
+   private Integer id;
 
    @ColumnInfo(name = "event")
    private String event;
@@ -19,12 +20,13 @@ public class Event {
    @ColumnInfo(name = "value")
    private String value;
 
-   public Event(String event, String value) {
+   public Event(Integer id, String event, String value) {
+    this.id = id;
     this.event = event;
     this.value = value;
    }
    
-   public String getId(){return this.id_event;}
+   public Integer getId(){return this.id;}
    public String getEvent(){return this.event;}
    public String getValue(){return this.value;}
 }
