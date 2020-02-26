@@ -21,7 +21,7 @@ public class Event {
    private String value;
 
    public Event(Integer id, String event, String value) {
-    this.id = 0;
+    this.id = id;
     this.event = event;
     this.value = value;
    }

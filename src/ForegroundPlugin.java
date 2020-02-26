@@ -65,7 +65,7 @@ public class ForegroundPlugin extends CordovaPlugin {
     private void insertEvent(String id, String event, String value){
         try {
             SyncEvents sincronizador = new SyncEvents(context);
-            sincronizador.insertEvent(0, event, value);
+            sincronizador.insertEvent(Integer.parseInt(id), event, value);
             callback.success("Sucess in action: insertEvent");
         } catch (Exception e) {
             callback.error("Error in action: insertEvent: " + e);

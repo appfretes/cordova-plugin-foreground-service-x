@@ -66,7 +66,6 @@ public class SyncEvents {
         Log.d(TAG, "ID: " + id);
         Log.d(TAG, "Event: " + event);
         Log.d(TAG, "Value: " + value);
-        
         EventRepository eventBD = new EventRepository(context);
         Event newEvent = new Event(id, event, value);
         eventBD.insert(newEvent);
