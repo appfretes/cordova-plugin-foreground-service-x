@@ -6,7 +6,7 @@ var exec = require('cordova/exec');
   exports.stop = function(){
     exec(null, null, "ForegroundPlugin", "stop", []);
   };
-  exports.insertEvent = function(id, event, value){
+  exports.insertEvent = function(success, error, id, event, value){
     exec(success, error, "ForegroundPlugin", "insertEvent", [id || "", event || "", value || ""]);
   };
   exports.getEventsTest = function(success, error) {

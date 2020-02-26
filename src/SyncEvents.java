@@ -66,9 +66,13 @@ public class SyncEvents {
         Log.d(TAG, "ID: " + id);
         Log.d(TAG, "Event: " + event);
         Log.d(TAG, "Value: " + value);
+        Log.d(TAG, "VAI SALVAR 1");
         EventRepository eventBD = new EventRepository(context);
+        Log.d(TAG, "VAI SALVAR 2");
         Event newEvent = new Event(id, event, value);
+        Log.d(TAG, "VAI SALVAR 3");
         eventBD.insert(newEvent);
+        Log.d(TAG, "VAI SALVAR 4");
     };
 
     public JSONArray getEvents() {
