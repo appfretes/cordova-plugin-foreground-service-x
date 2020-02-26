@@ -39,50 +39,20 @@ public class SyncEvents {
     }
 
     public void testeBD() {
-        Log.i(TAG, "INICIANDO TESTE BANCO DE DADOS 'WORD' ");
-        WordRepository bd = new WordRepository(context);
-        Word word = new Word("dsadsadsa");
-        bd.insert(word);
-        List<Word> wordList = bd.getAll();
-        Log.d(TAG, "Rows Count: " + wordList.size());
-        for (int i = 0; i <= wordList.size() - 1; i++) {
-            Log.d(TAG, "wordList[0]: " + wordList.get(i).getWord());
-        };
-        Log.i(TAG, "FINALIZANDO TESTE BANCO DE DADOS 'WORD' ");
-
-        Log.i(TAG, "INICIANDO TESTE BANCO DE DADOS 'EVENT' ");
-        EventRepository eventBD = new EventRepository(context);
-        Event event = new Event(0, "CHEGOU_AO_DESTINO", "");
-        eventBD.insert(event);
-        List<Event> eventList = eventBD.getAll();
-        Log.d(TAG, "Rows Count: " + eventList.size());
-        for (int i = 0; i <= eventList.size() - 1; i++) {
-            Log.d(TAG, "eventList[0]: " + eventList.get(i).getEvent() + " - " + eventList.get(i).getValue());
-        };
-        Log.i(TAG, "FINALIZANDO TESTE BANCO DE DADOS 'WORD' ");
     }
 
     public void insertEvent(Integer id, String event, String value) {
-        Log.d(TAG, "ID: " + id);
-        Log.d(TAG, "Event: " + event);
-        Log.d(TAG, "Value: " + value);
-        Log.d(TAG, "VAI SALVAR 1");
         EventRepository eventBD = new EventRepository(context);
-        Log.d(TAG, "VAI SALVAR 2");
         Event newEvent = new Event(id, event, value);
-        Log.d(TAG, "VAI SALVAR 3");
         eventBD.insert(newEvent);
-        Log.d(TAG, "VAI SALVAR 4");
     };
 
     public JSONArray getEvents() {
         EventRepository eventBD = new EventRepository(context);
         List<Event> eventList = eventBD.getAll();
-        Log.d(TAG, "Rows Count: " + eventList.size());
         JSONArray array = new JSONArray();
         
         for (int i = 0; i <= eventList.size() - 1; i++) {
-            Log.d(TAG, "eventList[0]: " + String.valueOf(eventList.get(i).getId()) + " - " + eventList.get(i).getEvent() + " - " + eventList.get(i).getValue());
             try {
                 JSONObject obj = new JSONObject();
                 obj.put("id", String.valueOf(eventList.get(i).getId()));
@@ -90,7 +60,7 @@ public class SyncEvents {
                 obj.put("value", eventList.get(i).getValue());
                 array.put(obj);
             } catch (JSONException e) {
-                Log.d(TAG, "Teste: " + e);
+                Log.d(TAG, "Erro: " + e);
             }
         };
 

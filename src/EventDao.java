@@ -21,4 +21,7 @@ public interface EventDao {
 
    @Query("SELECT * FROM event LIMIT 1")
    Event findUnique();
+
+   @Query("SELECT * FROM event ORDER BY id DESC LIMIT 1")
+   Event findLast();
 }

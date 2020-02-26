@@ -10,6 +10,7 @@ import java.util.List;
 class EventRepository {
 
     private EventDao eventDao;
+  private static final String TAG = "SoftnielsLogger";
 
     // Note that in order to unit test the WordRepository, you have to remove the Application
     // dependency. This adds complexity and much more code, and this sample is not about testing.
@@ -28,7 +29,18 @@ class EventRepository {
     // that you're not doing any long running operations on the main thread, blocking the UI.
     void insert(Event event) {
         AppRoomDatabase.databaseWriteExecutor.execute(() -> {
+            
+Log.i(TAG, "VAI INSERIR 1");
+            Integer auxId = 0;
+Log.i(TAG, "VAI INSERIR 2");
+            Event auxEvent = eventDao.findLast();
+Log.i(TAG, "VAI INSERIR 3");
+            auxId = auxEvent.getId() + 1;
+Log.i(TAG, "VAI INSERIR 4");
+            event.setId(auxId);
+Log.i(TAG, "VAI INSERIR 5");
             eventDao.insert(event);
+Log.i(TAG, "VAI INSERIR 6");
         });
     }
 }

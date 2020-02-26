@@ -29,4 +29,8 @@ public class Event {
    public Integer getId(){return this.id;}
    public String getEvent(){return this.event;}
    public String getValue(){return this.value;}
+
+   public Integer setId(Integer id){
+      this.id = id;
+   }
 }

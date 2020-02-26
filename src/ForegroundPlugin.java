@@ -73,15 +73,10 @@ public class ForegroundPlugin extends CordovaPlugin {
     }
 
     private void getEvents(){
-        Log.i(TAG, "vai buscar");
         try{
             SyncEvents sincronizador = new SyncEvents(context);
-            //sincronizador.getEvents();
-            Log.i(TAG, "vai buscar sucesso");
             callback.success(sincronizador.getEvents());
-            Log.i(TAG, "vai buscar sucesso 2");
         } catch (Exception e){
-            Log.i(TAG, "vai buscar erro");
             callback.error("Error in action: getEvents: " + e);
         }
     }
