@@ -7,10 +7,10 @@ module.exports = {
   stop: function() {
     exec(null, null, "ForegroundPlugin", "stop", []);
   },
-  insertEvent: function(id, event, value) {
-    exec(null, null, "ForegroundPlugin", "insertEvent", [id || "", event || "", value || ""]);
+  insertEvent: function(success, error, id, event, value) {
+    exec(success, error, "ForegroundPlugin", "insertEvent", [id || "", event || "", value || ""]);
   },
-  getEvents: function() {
-    exec(null, null, "ForegroundPlugin", "getEvents", []);
+  getEvents: function(success, error) {
+    exec(success, error, "ForegroundPlugin", "getEvents", []);
   }
 };
