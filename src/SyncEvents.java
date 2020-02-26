@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.content.Context;
 import android.util.Log;
 import android.os.CountDownTimer;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -74,11 +77,15 @@ public class SyncEvents {
         for (int i = 0; i <= eventList.size() - 1; i++) {
             Log.d(TAG, "eventList[0]: " + eventList.get(i).getEvent() + " - " + eventList.get(i).getValue());
 
-            JSONObject obj = new JSONObject();
-            obj.put("id", eventList.get(i).getId());
-            obj.put("event", eventList.get(i).getEvent());
-            obj.put("value", eventList.get(i).getValue());
-            array.put(obj);
+            try {
+                JSONObject obj = new JSONObject();
+                //obj.put("id", Integer.toString(eventList.get(i).getId()));
+                obj.put("event", eventList.get(i).getEvent());
+                obj.put("value", eventList.get(i).getValue());
+                array.put(obj);
+            } catch (JSONException e) {
+                Log.d(TAG, "Teste: " + e);
+            }
         };
 
         return array;

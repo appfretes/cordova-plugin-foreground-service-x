@@ -10,17 +10,30 @@ import android.content.Intent;
 import android.content.Context;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import android.util.Log;
 
 public class ForegroundPlugin extends CordovaPlugin {
 
     private CallbackContext callback = null;
     private Context context = this.cordova.getActivity().getApplicationContext();
+    private static final String TAG = "SoftnielsLogger";
 
+    /**
+     * Executes the request.
+     *
+     * @param action   The action to execute.
+     * @param args     The exec() arguments.
+     * @param callback The callback context used when
+     *                 calling back into JavaScript.
+     *
+     * @return Returning false results in a "MethodNotFound" error.
+     */
     @Override
-    public boolean execute(final String action, final JSONArray args, final CallbackContext command)
-            throws JSONException {
+    public boolean execute(String action, JSONArray args, CallbackContext callbackContext)
+    {                
+        Log.i(TAG, "TESTE ACTION: " + action);
 
-        callback = command;
+        callback = callbackContext;
         if (action.equals("start")) {
             startService();
         } else if (action.equals("stop")) {
@@ -30,9 +43,10 @@ public class ForegroundPlugin extends CordovaPlugin {
         } else if (action.equals("getEvents")) {
             getEvents();
         } else {
-            callbackContext.error("Invalid action: " + action);
-        }
-        //command.success();
+            callback.error("Invalid action: " + action);
+        };
+        
+        Log.i(TAG, "TESTE ACTION 2: " + action);
         return true;
     }
 
@@ -50,6 +64,7 @@ public class ForegroundPlugin extends CordovaPlugin {
     }
 
     private void insertEvent(String id, String event, String value){
+        Log.i(TAG, "vai inserir");
         try {
             SyncEvents sincronizador = new SyncEvents(context);
             sincronizador.insertEvent(Integer.parseInt(id), event, value);
@@ -60,6 +75,7 @@ public class ForegroundPlugin extends CordovaPlugin {
     }
 
     private void getEvents(){
+        Log.i(TAG, "vai buscar");
         try{
             SyncEvents sincronizador = new SyncEvents(context);
             callback.success(sincronizador.getEvents());
