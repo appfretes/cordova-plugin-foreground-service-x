@@ -13,9 +13,14 @@ import androidx.core.content.ContextCompat;
 
 public class ForegroundPlugin extends CordovaPlugin {
 
+    private CallbackContext callback = null;
+    private Context context = this.cordova.getActivity().getApplicationContext();
+
     @Override
     public boolean execute(final String action, final JSONArray args, final CallbackContext command)
             throws JSONException {
+
+        callback = command;
         if (action.equals("start")) {
             startService();
         } else if (action.equals("stop")) {
@@ -24,8 +29,10 @@ public class ForegroundPlugin extends CordovaPlugin {
             insertEvent(args.getString(0), args.getString(1), args.getString(2));
         } else if (action.equals("getEvents")) {
             getEvents();
+        } else {
+            callbackContext.error("Invalid action: " + action);
         }
-        command.success();
+        //command.success();
         return true;
     }
 
@@ -43,14 +50,21 @@ public class ForegroundPlugin extends CordovaPlugin {
     }
 
     private void insertEvent(String id, String event, String value){
-        Context context = this.cordova.getActivity().getApplicationContext();
-        SyncEvents sincronizador = new SyncEvents(context);
-        sincronizador.insertEvent(Integer.parseInt(id), event, value);
+        try {
+            SyncEvents sincronizador = new SyncEvents(context);
+            sincronizador.insertEvent(Integer.parseInt(id), event, value);
+            callback.success("Sucess in action: insertEvent");
+        } catch (Exception e) {
+            callback.error("Error in action: insertEvent: " + e);
+        }
     }
 
     private void getEvents(){
-        Context context = this.cordova.getActivity().getApplicationContext();
-        SyncEvents sincronizador = new SyncEvents(context);
-        sincronizador.getEvents();
+        try{
+            SyncEvents sincronizador = new SyncEvents(context);
+            callback.success(sincronizador.getEvents());
+        } catch (Exception e){
+            callback.error("Error in action: getEvents: " + e);
+        }
     }
 }

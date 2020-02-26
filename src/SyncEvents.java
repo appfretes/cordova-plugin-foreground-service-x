@@ -65,17 +65,22 @@ public class SyncEvents {
         eventBD.insert(newEvent);
     };
 
-    public void getEvents() {
-
-        Log.i(TAG, "INICIANDO TESTE BANCO DE DADOS 'EVENT' ");
-
+    public JSONArray getEvents() {
         EventRepository eventBD = new EventRepository(context);
         List<Event> eventList = eventBD.getAll();
+        JSONArray array = new JSONArray();
+
         Log.d(TAG, "Rows Count: " + eventList.size());
         for (int i = 0; i <= eventList.size() - 1; i++) {
             Log.d(TAG, "eventList[0]: " + eventList.get(i).getEvent() + " - " + eventList.get(i).getValue());
+
+            JSONObject obj = new JSONObject();
+            obj.put("id", eventList.get(i).getId());
+            obj.put("event", eventList.get(i).getEvent());
+            obj.put("value", eventList.get(i).getValue());
+            array.put(obj);
         };
 
-        Log.i(TAG, "FINALIZANDO TESTE BANCO DE DADOS 'WORD' ");        
+        return array;
     };
 }
