@@ -11,9 +11,12 @@ import android.os.Build;
 import android.os.IBinder;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
+import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class ForegroundService extends Service {
     private static final String CHANNEL_ID = "ForegroundServiceChannel";
+    private LocationGPS locationGPS = null; // GPS
 
     @Override
     public void onCreate() {
@@ -37,13 +40,15 @@ public class ForegroundService extends Service {
         startForeground(1, notification);
         
         // Fazer capturas em segundo plano e gravar
+        locationGPS = new LocationGPS();
+        locationGPS.StartTrackLocation(getBaseContext());
         // 
         // Verificar se entrou na cerca
         // 
         // Sincronizar eventos
-        SyncEvents sincronizador = new SyncEvents(context);
+        //SyncEvents sincronizador = new SyncEvents(context);
         //sincronizador.sincronizarEventos();
-        sincronizador.testeBD();
+        //sincronizador.testeBD();
 
         //do heavy work on a background thread
         //stopSelf();

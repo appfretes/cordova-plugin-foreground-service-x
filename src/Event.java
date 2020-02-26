@@ -30,7 +30,7 @@ public class Event {
    public String getEvent(){return this.event;}
    public String getValue(){return this.value;}
 
-   public Integer setId(Integer id){
-      this.id = id;
-   }
+   // public Integer setId(Integer id){
+   //    this.id = id;
+   // }
 }

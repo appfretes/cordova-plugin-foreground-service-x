@@ -32,18 +32,21 @@ public class ForegroundPlugin extends CordovaPlugin {
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext)
     throws JSONException{
         context = this.cordova.getActivity().getApplicationContext();
-
         callback = callbackContext;
-        if (action.equals("start")) {
-            startService();
-        } else if (action.equals("stop")) {
-            stopService();
-        } else if (action.equals("insertEvent")) {
-            insertEvent(args.getString(0), args.getString(1), args.getString(2));
-        } else if (action.equals("getEvents")) {
-            getEvents();
+        if (ValidarPermissaoExecucao()) {
+            if (action.equals("start")) {
+                startService();
+            } else if (action.equals("stop")) {
+                stopService();
+            } else if (action.equals("insertEvent")) {
+                insertEvent(args.getString(0), args.getString(1), args.getString(2));
+            } else if (action.equals("getEvents")) {
+                getEvents();
+            } else {
+                callback.error("Invalid action: " + action);
+            };
         } else {
-            callback.error("Invalid action: " + action);
+            callback.error("O aplicativo não funcionará até que as permissões sejam liberadas.");
         };
 
         return true;
@@ -55,6 +58,13 @@ public class ForegroundPlugin extends CordovaPlugin {
         serviceIntent.putExtra("inputExtra", "Foreground Service Example in Android");
         ContextCompat.startForegroundService(activity, serviceIntent);
     }
+
+    private boolean ValidarPermissaoExecucao() {
+        return (Permission.checkForeGroundService(getBaseContext(), mainActivity) &&
+                Permission.checkAccessFineLocation(getBaseContext(), mainActivity) &&
+                Permission.checkAccessCoarseLocation(getBaseContext(), mainActivity)
+        );
+    }    
 
     private void stopService() {
         // Activity activity = cordova.getActivity();

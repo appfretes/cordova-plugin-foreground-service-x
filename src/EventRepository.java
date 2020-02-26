@@ -30,17 +30,17 @@ class EventRepository {
     void insert(Event event) {
         AppRoomDatabase.databaseWriteExecutor.execute(() -> {
             
-Log.i(TAG, "VAI INSERIR 1");
-            Integer auxId = 0;
-Log.i(TAG, "VAI INSERIR 2");
-            Event auxEvent = eventDao.findLast();
-Log.i(TAG, "VAI INSERIR 3");
-            auxId = auxEvent.getId() + 1;
-Log.i(TAG, "VAI INSERIR 4");
-            event.setId(auxId);
-Log.i(TAG, "VAI INSERIR 5");
+// Log.i(TAG, "VAI INSERIR 1");
+//             Integer auxId = 0;
+// Log.i(TAG, "VAI INSERIR 2");
+//             Event auxEvent = eventDao.findLast();
+// Log.i(TAG, "VAI INSERIR 3");
+//             auxId = auxEvent.getId() + 1;
+// Log.i(TAG, "VAI INSERIR 4");
+            //event.setId(auxId);
+//Log.i(TAG, "VAI INSERIR 5");
             eventDao.insert(event);
-Log.i(TAG, "VAI INSERIR 6");
+//Log.i(TAG, "VAI INSERIR 6");
         });
     }
 }
