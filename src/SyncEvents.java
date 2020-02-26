@@ -63,6 +63,10 @@ public class SyncEvents {
     }
 
     public void insertEvent(Integer id, String event, String value) {
+        Log.d(TAG, "ID: " + id);
+        Log.d(TAG, "Event: " + event);
+        Log.d(TAG, "Value: " + value);
+        
         EventRepository eventBD = new EventRepository(context);
         Event newEvent = new Event(id, event, value);
         eventBD.insert(newEvent);
@@ -71,9 +75,10 @@ public class SyncEvents {
     public JSONArray getEvents() {
         EventRepository eventBD = new EventRepository(context);
         List<Event> eventList = eventBD.getAll();
-        JSONArray array = new JSONArray();
-
         Log.d(TAG, "Rows Count: " + eventList.size());
+
+        JSONArray array = new JSONArray();
+        
         for (int i = 0; i <= eventList.size() - 1; i++) {
             Log.d(TAG, "eventList[0]: " + eventList.get(i).getEvent() + " - " + eventList.get(i).getValue());
 

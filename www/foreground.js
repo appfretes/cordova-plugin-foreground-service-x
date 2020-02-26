@@ -6,9 +6,12 @@ var exec = require('cordova/exec');
   exports.stop = function(){
     exec(null, null, "ForegroundPlugin", "stop", []);
   };
-  exports.insertEvent = function(success, error, id, event, value){
-    exec(success, error, "ForegroundPlugin", "insertEvent", [id || "", event || "", value || ""]);
+  exports.insertEvent = function(id, event, value){
+    exec(null, null, "ForegroundPlugin", "insertEvent", [id || "", event || "", value || ""]);
   };
-  exports.getEvents = function(success, error) {
+  exports.getEventsTest = function(success, error) {
     exec(success, error, "ForegroundPlugin", "getEvents", []);
+  };
+  exports.getEvents = function() {
+    exec(null, null, "ForegroundPlugin", "getEvents", []);
   };
