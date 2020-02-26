@@ -76,15 +76,13 @@ public class SyncEvents {
         EventRepository eventBD = new EventRepository(context);
         List<Event> eventList = eventBD.getAll();
         Log.d(TAG, "Rows Count: " + eventList.size());
-
         JSONArray array = new JSONArray();
         
         for (int i = 0; i <= eventList.size() - 1; i++) {
-            Log.d(TAG, "eventList[0]: " + eventList.get(i).getEvent() + " - " + eventList.get(i).getValue());
-
+            Log.d(TAG, "eventList[0]: " + String.valueOf(eventList.get(i).getId()) + " - " + eventList.get(i).getEvent() + " - " + eventList.get(i).getValue());
             try {
                 JSONObject obj = new JSONObject();
-                //obj.put("id", Integer.toString(eventList.get(i).getId()));
+                obj.put("id", String.valueOf(eventList.get(i).getId()));
                 obj.put("event", eventList.get(i).getEvent());
                 obj.put("value", eventList.get(i).getValue());
                 array.put(obj);
