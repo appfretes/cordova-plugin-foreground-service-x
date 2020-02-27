@@ -15,3 +15,6 @@ var exec = require('cordova/exec');
   exports.getEvents = function(success, error) {
     exec(success, error, "ForegroundPlugin", "getEvents", []);
   };
+  exports.getLocations = function(success, error) {
+    exec(success, error, "ForegroundPlugin", "getLocations", []);
+  };

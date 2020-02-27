@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.annotation.NonNull;
 import androidx.room.PrimaryKey;
+import java.util.Date;
 
 @Entity(tableName = "location")
 public class Location {
@@ -19,18 +20,18 @@ public class Location {
    private String longitude;
 
    @ColumnInfo(name = "data_transacao")
-   private Date data_transacao;
+   private String dataTransacao;
 
-   public Location(String latitude, String longitude, Date data_transacao) {
+   public Location(String latitude, String longitude, String dataTransacao) {
     this.latitude = latitude;
     this.longitude = longitude;
-    this.data_transacao = data_transacao;
+    this.dataTransacao = dataTransacao;
    }
    
    public Integer getId(){return this.id;}
    public String getLatitude(){return this.latitude;}
    public String getLongitude(){return this.longitude;}
-   public Date getDataTransacao(){return this.data_transacao;}
+   public String getDataTransacao(){return this.dataTransacao;}
    public void setId(Integer id){
       this.id = id;
    }

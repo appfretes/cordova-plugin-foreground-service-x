@@ -20,15 +20,20 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 public class LocationGPS extends Service implements LocationListener {
 
     private LocationManager locationManager = null;
-    private int MIN_TIME_BW_UPDATES = 1000;
-    private int MIN_DISTANCE_CHANGE_FOR_UPDATES = 1;
+    private int MIN_TIME_BW_UPDATES = 10000;
+    private int MIN_DISTANCE_CHANGE_FOR_UPDATES = 50;
     private static final String TAG = "SoftnielsLogger";
+    private Context context;
+    private LocationRepository locationBD;
 
     public void StopTrackLocation(Context context) {
+        this.context = context;
         locationManager.removeUpdates(this);
     }
 
     public void StartTrackLocation(Context context) {
+        this.context = context;
+        locationBD = new LocationRepository(this.context);
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         Location location = null;
         Boolean isGPSEnabled;
@@ -55,6 +60,7 @@ public class LocationGPS extends Service implements LocationListener {
     public void onLocationChanged(Location location) {
         Log.d(TAG, "RECEBEU ATUALIZACAO DE LOCALIZAÇÃO");
         InsertLatitudeLongitude(location);
+        Log.d(TAG, "PASSOU ATUALIZACAO DE LOCALIZAÇÃO");
         //editTextHaversine.setText(CalcularHaversine(location).toString()); Calculo da cerca
     }
 
@@ -62,12 +68,11 @@ public class LocationGPS extends Service implements LocationListener {
         Log.d(TAG, Double.toString(location.getLatitude()));
         Log.d(TAG, Double.toString(location.getLongitude()));
         Log.d(TAG, "VAI INSERIR NO BANCO");
-        LocationRepository locationBD = new LocationRepository(context);
         Log.d(TAG, "VAI INSERIR NO BANCO 1");
-        Location newLocation = new Location(
+        com.softniels.foregroundservicex.Location newLocation = new com.softniels.foregroundservicex.Location(
             Double.toString(location.getLatitude()),
             Double.toString(location.getLongitude()),
-            location.getTime()
+            Double.toString(location.getTime())
         );
         Log.d(TAG, "VAI INSERIR NO BANCO 2");
         locationBD.insert(newLocation);

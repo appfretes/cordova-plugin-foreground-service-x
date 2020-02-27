@@ -20,5 +20,5 @@ public interface LocationDao {
    List<Location> getAll();
 
    @Query("SELECT * FROM location ORDER BY id DESC LIMIT 1")
-   Event findLast();
+   Location findLast();
 }

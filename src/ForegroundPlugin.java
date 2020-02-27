@@ -45,6 +45,8 @@ public class ForegroundPlugin extends CordovaPlugin {
                 insertEvent(args.getString(0), args.getString(1), args.getString(2));
             } else if (action.equals("getEvents")) {
                 getEvents();
+            } else if (action.equals("getLocations")) {
+                getLocations();
             } else {
                 callback.error("Invalid action: " + action);
             };
@@ -92,6 +94,31 @@ public class ForegroundPlugin extends CordovaPlugin {
         try{
             SyncEvents sincronizador = new SyncEvents(context);
             callback.success(sincronizador.getEvents());
+        } catch (Exception e){
+            callback.error("Error in action: getEvents: " + e);
+        }
+    }
+
+    private void getLocations(){
+        try{
+            LocationRepository locationBD = new LocationRepository(context);
+            List<Location> locationList = locationBD.getAll();
+            JSONArray array = new JSONArray();
+        
+            for (int i = 0; i <= locationList.size() - 1; i++) {
+                try {
+                    JSONObject obj = new JSONObject();
+                    obj.put("id", String.valueOf(locationList.get(i).getId()));
+                    obj.put("latitude", locationList.get(i).getLatitude());
+                    obj.put("longitude", locationList.get(i).getLongitude());
+                    obj.put("dataTransacao", locationList.get(i).getDataTransacao());
+                    array.put(obj);
+                } catch (JSONException e) {
+                    Log.d(TAG, "Erro: " + e);
+                }
+            };
+
+            callback.success(array);
         } catch (Exception e){
             callback.error("Error in action: getEvents: " + e);
         }
