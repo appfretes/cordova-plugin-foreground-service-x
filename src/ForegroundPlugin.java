@@ -37,7 +37,7 @@ public class ForegroundPlugin extends CordovaPlugin {
         callback = callbackContext;
         if (ValidarPermissaoExecucao()) {
             if (action.equals("start")) {
-                startService(args.getInt(4), args.getString(5), args.getString(6), args.getInt(7), args.getInt(8));
+                startService(args.getInt(5), args.getString(6), args.getString(7), args.getInt(8), args.getInt(9));
             } else if (action.equals("stop")) {
                 stopService();
             } else if (action.equals("verifyPermissions")) {
@@ -120,6 +120,7 @@ public class ForegroundPlugin extends CordovaPlugin {
                     obj.put("latitude", locationList.get(i).getLatitude());
                     obj.put("longitude", locationList.get(i).getLongitude());
                     obj.put("dataTransacao", locationList.get(i).getDataTransacao());
+                    obj.put("sincronizado", locationList.get(i).getSincronizado());
                     array.put(obj);
                 } catch (JSONException e) {
                     Log.d(TAG, "Erro: " + e);
