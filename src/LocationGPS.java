@@ -22,6 +22,7 @@ public class LocationGPS extends Service implements LocationListener {
     private LocationManager locationManager = null;
     private int MIN_TIME_BW_UPDATES = 10000;
     private int MIN_DISTANCE_CHANGE_FOR_UPDATES = 50;
+    private int ID_FRETE = 0;
     private String LATITUDE;
     private String LONGITUDE;
     private int TEMPO_CAPTURA;
@@ -35,22 +36,9 @@ public class LocationGPS extends Service implements LocationListener {
         locationManager.removeUpdates(this);
     }
 
-    public void StartTrackLocation(Context context, Bundle extras) {
+    public void StartTrackLocation(Context context) {
         this.context = context;
         locationBD = new LocationRepository(this.context);
-
-        LATITUDE = extras.get("latitude");
-        LONGITUDE = extras.get("longitude");
-        try {
-            TEMPO_CAPTURA = Integer.parseInt((String) extras.get("tempo_captura"));
-        } catch (NumberFormatException e) {
-            TEMPO_CAPTURA = MIN_TIME_BW_UPDATES;
-        }
-        try {
-            DISTANCIA_CAPTURA = Integer.parseInt((String) extras.get("distancia_captura"));
-        } catch (NumberFormatException e) {
-            DISTANCIA_CAPTURA = MIN_DISTANCE_CHANGE_FOR_UPDATES;
-        }
 
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         Location location = null;
@@ -65,6 +53,32 @@ public class LocationGPS extends Service implements LocationListener {
                             DISTANCIA_CAPTURA, this);
                 }
             }
+        }
+    }
+
+    public void setFrete(String idFrete){
+        try {
+            ID_FRETE = Integer.parseInt((String) idFrete);
+        } catch (NumberFormatException e) {
+            ID_FRETE = ID_FRETE;
+        }
+    }
+
+    public void setDestino(String latitude, String longitude){
+        LATITUDE = latitude;
+        LONGITUDE = longitude;
+    }
+
+    public void setConfigLocation(String tempo_captura, String distancia_captura){
+        try {
+            TEMPO_CAPTURA = Integer.parseInt((String) tempo_captura);
+        } catch (NumberFormatException e) {
+            TEMPO_CAPTURA = MIN_TIME_BW_UPDATES;
+        }
+        try {
+            DISTANCIA_CAPTURA = Integer.parseInt((String) distancia_captura);
+        } catch (NumberFormatException e) {
+            DISTANCIA_CAPTURA = MIN_DISTANCE_CHANGE_FOR_UPDATES;
         }
     }
 
@@ -88,6 +102,7 @@ public class LocationGPS extends Service implements LocationListener {
         Log.d(TAG, "VAI INSERIR NO BANCO");
         Log.d(TAG, "VAI INSERIR NO BANCO 1");
         com.softniels.foregroundservicex.Location newLocation = new com.softniels.foregroundservicex.Location(
+            ID_FRETE,
             Double.toString(location.getLatitude()),
             Double.toString(location.getLongitude()),
             Double.toString(location.getTime())

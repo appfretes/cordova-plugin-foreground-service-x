@@ -42,8 +42,20 @@ public class ForegroundService extends Service {
         startForeground(1, notification);
         
         // Fazer capturas em segundo plano e gravar
+        //String input = intent.getStringExtra("inputExtra");
+        Log.d(TAG, "TESTE 11111111");
+        Log.d(TAG, intent.getStringExtra("id_frete"));
+        Log.d(TAG, intent.getStringExtra("latitude"));
+        Log.d(TAG, intent.getStringExtra("longitude"));
+        Log.d(TAG, intent.getStringExtra("tempo_captura"));
+        Log.d(TAG, intent.getStringExtra("distancia_captura"));
+        Log.d(TAG, "TESTE 22222222");
         locationGPS = new LocationGPS();
-        locationGPS.StartTrackLocation(getBaseContext(), intent.getExtras());
+        locationGPS.setFrete(intent.getStringExtra("id_frete"));
+        locationGPS.setDestino(intent.getStringExtra("latitude"), intent.getStringExtra("longitude"));
+        locationGPS.setConfigLocation(intent.getStringExtra("tempo_captura"), intent.getStringExtra("distancia_captura"));
+        locationGPS.StartTrackLocation(getBaseContext());
+        Log.d(TAG, "TESTE 33333333");
         // 
         // Verificar se entrou na cerca
         // 
