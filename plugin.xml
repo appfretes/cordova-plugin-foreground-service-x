@@ -22,6 +22,7 @@
     <source-file src="src/AppRoomDatabase.java" target-dir="src/com/softniels/foregroundservicex" />    
     <source-file src="src/LocationGPS.java" target-dir="src/com/softniels/foregroundservicex" />
     <source-file src="src/Permission.java" target-dir="src/com/softniels/foregroundservicex" />
+    <source-file src="src/Haversine.java" target-dir="src/com/softniels/foregroundservicex" />
     <config-file target="AndroidManifest.xml" parent="/manifest/application">
       <service android:name="com.softniels.foregroundservicex.ForegroundService" android:stopWithTask="false" />
         </config-file>

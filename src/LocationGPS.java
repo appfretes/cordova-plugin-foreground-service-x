@@ -23,8 +23,8 @@ public class LocationGPS extends Service implements LocationListener {
     private int MIN_TIME_BW_UPDATES = 10000;
     private int MIN_DISTANCE_CHANGE_FOR_UPDATES = 50;
     private int ID_FRETE = 0;
-    private String LATITUDE;
-    private String LONGITUDE;
+    private String DESTINO_LATITUDE;
+    private String DESTINO_LONGITUDE;
     private int TEMPO_CAPTURA;
     private int DISTANCIA_CAPTURA;
     private static final String TAG = "SoftnielsLogger";
@@ -65,8 +65,8 @@ public class LocationGPS extends Service implements LocationListener {
     }
 
     public void setDestino(String latitude, String longitude){
-        LATITUDE = latitude;
-        LONGITUDE = longitude;
+        DESTINO_LATITUDE = latitude;
+        DESTINO_LONGITUDE = longitude;
     }
 
     public void setConfigLocation(String tempo_captura, String distancia_captura){
@@ -91,7 +91,8 @@ public class LocationGPS extends Service implements LocationListener {
     @Override
     public void onLocationChanged(Location location) {
         InsertLatitudeLongitude(location);
-        //editTextHaversine.setText(CalcularHaversine(location).toString()); Calculo da cerca
+        //Calcular cerca
+        CalcularHaversine(location);
     }
 
     private void InsertLatitudeLongitude(Location location) {
@@ -104,10 +105,12 @@ public class LocationGPS extends Service implements LocationListener {
         locationBD.insert(newLocation);
     }
 
-    private Double CalcularHaversine(Location location) {
-        //double distancia = Haversine.haversine(-26.243626, -51.071994, location.getLatitude(), location.getLongitude());
-        double distancia = 0;
-        return distancia;
+    private CalcularHaversine(Location location) {
+        Log.d(TAG, "VAI CALCULAR DISTANCIA");
+        double distancia = Haversine.haversine(DESTINO_LATITUDE, DESTINO_LONGITUDE, location.getLatitude(), location.getLongitude());
+        Log.d(TAG, "CALCULOU DISTANCIA");
+        Log.d(TAG, Double.toString(distancia));
+        Log.d(TAG, "CALCULOU DISTANCIA FIM");
     }
 
     @Override
