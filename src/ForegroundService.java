@@ -13,10 +13,12 @@ import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+import android.util.Log;
 
 public class ForegroundService extends Service {
     private static final String CHANNEL_ID = "ForegroundServiceChannel";
     private LocationGPS locationGPS = null; // GPS
+    private static final String TAG = "SoftnielsLogger";
 
     @Override
     public void onCreate() {

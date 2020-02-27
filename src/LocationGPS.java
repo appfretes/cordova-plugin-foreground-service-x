@@ -64,7 +64,8 @@ public class LocationGPS extends Service implements LocationListener {
     }
 
     private Double CalcularHaversine(Location location) {
-        double distancia = Haversine.haversine(-26.243626, -51.071994, location.getLatitude(), location.getLongitude());
+        //double distancia = Haversine.haversine(-26.243626, -51.071994, location.getLatitude(), location.getLongitude());
+        double distancia = 0;
         return distancia;
     }
 

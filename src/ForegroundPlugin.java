@@ -11,6 +11,7 @@ import android.content.Context;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import android.util.Log;
+import io.cordova.hellocordova.*;
 
 public class ForegroundPlugin extends CordovaPlugin {
 
@@ -38,6 +39,8 @@ public class ForegroundPlugin extends CordovaPlugin {
                 startService();
             } else if (action.equals("stop")) {
                 stopService();
+            } else if (action.equals("verifyPermissions")) {
+                verifyPermissions();
             } else if (action.equals("insertEvent")) {
                 insertEvent(args.getString(0), args.getString(1), args.getString(2));
             } else if (action.equals("getEvents")) {
@@ -48,7 +51,6 @@ public class ForegroundPlugin extends CordovaPlugin {
         } else {
             callback.error("O aplicativo não funcionará até que as permissões sejam liberadas.");
         };
-
         return true;
     }
 
@@ -59,10 +61,14 @@ public class ForegroundPlugin extends CordovaPlugin {
         ContextCompat.startForegroundService(activity, serviceIntent);
     }
 
+    private void verifyPermissions(){
+        Permission.checkAccessFineLocation(context, cordova.getActivity());
+        Permission.checkAccessCoarseLocation(context, cordova.getActivity());
+    }
+
     private boolean ValidarPermissaoExecucao() {
-        return (Permission.checkForeGroundService(getBaseContext(), mainActivity) &&
-                Permission.checkAccessFineLocation(getBaseContext(), mainActivity) &&
-                Permission.checkAccessCoarseLocation(getBaseContext(), mainActivity)
+        return (Permission.checkAccessFineLocation(context, cordova.getActivity()) &&
+                Permission.checkAccessCoarseLocation(context, cordova.getActivity())
         );
     }    
 
