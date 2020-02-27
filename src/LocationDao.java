@@ -24,4 +24,7 @@ public interface LocationDao {
 
    @Query("UPDATE location SET sincronizado = 'Sim' WHERE id_frete = :idFrete")
    void updateSyncLocations(Integer idFrete);
+
+   @Query("DELETE FROM location WHERE id_frete = :idFrete")
+   void deleteSyncLocations(Integer idFrete);
 }

@@ -27,6 +27,12 @@ class LocationRepository {
         });
     }
 
+    void deleteSyncLocations(Integer idFrete){
+        AppRoomDatabase.databaseWriteExecutor.execute(() -> {
+            locationDao.deleteSyncLocations(idFrete);
+        });
+    }
+
     void insert(Location location) {
         AppRoomDatabase.databaseWriteExecutor.execute(() -> {
             Integer auxId = 1;

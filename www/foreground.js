@@ -21,3 +21,6 @@ var exec = require('cordova/exec');
   exports.updateSyncLocations = function(success, error, idFrete) {
     exec(success, error, "ForegroundPlugin", "updateSyncLocations", [idFrete || ""]);
   };
+  exports.deleteSyncLocations = function(success, error, idFrete) {
+    exec(success, error, "ForegroundPlugin", "deleteSyncLocations", [idFrete || ""]);
+  };

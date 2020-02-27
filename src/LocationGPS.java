@@ -90,26 +90,18 @@ public class LocationGPS extends Service implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
-        Log.d(TAG, "RECEBEU ATUALIZACAO DE LOCALIZAÇÃO");
         InsertLatitudeLongitude(location);
-        Log.d(TAG, "PASSOU ATUALIZACAO DE LOCALIZAÇÃO");
         //editTextHaversine.setText(CalcularHaversine(location).toString()); Calculo da cerca
     }
 
     private void InsertLatitudeLongitude(Location location) {
-        Log.d(TAG, Double.toString(location.getLatitude()));
-        Log.d(TAG, Double.toString(location.getLongitude()));
-        Log.d(TAG, "VAI INSERIR NO BANCO");
-        Log.d(TAG, "VAI INSERIR NO BANCO 1");
         com.softniels.foregroundservicex.Location newLocation = new com.softniels.foregroundservicex.Location(
             ID_FRETE,
             Double.toString(location.getLatitude()),
             Double.toString(location.getLongitude()),
             Double.toString(location.getTime())
         );
-        Log.d(TAG, "VAI INSERIR NO BANCO 2");
         locationBD.insert(newLocation);
-        Log.d(TAG, "VAI INSERIR NO BANCO 3");
     }
 
     private Double CalcularHaversine(Location location) {

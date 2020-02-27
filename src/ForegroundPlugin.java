@@ -37,7 +37,7 @@ public class ForegroundPlugin extends CordovaPlugin {
         callback = callbackContext;
         if (ValidarPermissaoExecucao()) {
             if (action.equals("start")) {
-                startService(args.getInt(5), args.getString(6), args.getString(7), args.getInt(8), args.getInt(9));
+                startService(args.getString(5), args.getString(6), args.getString(7), args.getString(8), args.getString(9));
             } else if (action.equals("stop")) {
                 stopService();
             } else if (action.equals("verifyPermissions")) {
@@ -50,6 +50,8 @@ public class ForegroundPlugin extends CordovaPlugin {
                 getLocations();
             } else if (action.equals("updateSyncLocations")) {
                 updateSyncLocations(args.getInt(0));
+            } else if (action.equals("deleteSyncLocations")) {
+                deleteSyncLocations(args.getInt(0));
             } else {
                 callback.error("Invalid action: " + action);
             };
@@ -59,7 +61,7 @@ public class ForegroundPlugin extends CordovaPlugin {
         return true;
     }
 
-    private void startService(Integer id_frete, String latitude, String longitude, Integer tempo_captura, Integer distancia_captura) {
+    private void startService(String id_frete, String latitude, String longitude, String tempo_captura, String distancia_captura) {
         Activity activity = cordova.getActivity();
         Intent serviceIntent = new Intent(activity, ForegroundService.class);
         serviceIntent.putExtra("inputExtra", "Foreground Service Example in Android");
@@ -117,6 +119,7 @@ public class ForegroundPlugin extends CordovaPlugin {
                 try {
                     JSONObject obj = new JSONObject();
                     obj.put("id", String.valueOf(locationList.get(i).getId()));
+                    obj.put("idFrete", String.valueOf(locationList.get(i).getIdFrete()));
                     obj.put("latitude", locationList.get(i).getLatitude());
                     obj.put("longitude", locationList.get(i).getLongitude());
                     obj.put("dataTransacao", locationList.get(i).getDataTransacao());
@@ -139,7 +142,17 @@ public class ForegroundPlugin extends CordovaPlugin {
             locationBD.updateSyncLocations(idFrete);
             callback.success("Success");
         } catch (Exception e){
-            callback.error("Error in action: getLocations: " + e);
+            callback.error("Error in action: updateSyncLocations: " + e);
         }
-    }    
+    }
+
+    private void deleteSyncLocations(Integer idFrete){
+        try{
+            LocationRepository locationBD = new LocationRepository(context);
+            locationBD.deleteSyncLocations(idFrete);
+            callback.success("Success");
+        } catch (Exception e){
+            callback.error("Error in action: deleteSyncLocations: " + e);
+        }
+    }
 }
