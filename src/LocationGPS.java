@@ -61,6 +61,17 @@ public class LocationGPS extends Service implements LocationListener {
     private void InsertLatitudeLongitude(Location location) {
         Log.d(TAG, Double.toString(location.getLatitude()));
         Log.d(TAG, Double.toString(location.getLongitude()));
+        Log.d(TAG, "VAI INSERIR NO BANCO");
+        LocationRepository locationBD = new LocationRepository(context);
+        Log.d(TAG, "VAI INSERIR NO BANCO 1");
+        Location newLocation = new Location(
+            Double.toString(location.getLatitude()),
+            Double.toString(location.getLongitude()),
+            location.getTime()
+        );
+        Log.d(TAG, "VAI INSERIR NO BANCO 2");
+        locationBD.insert(newLocation);
+        Log.d(TAG, "VAI INSERIR NO BANCO 3");
     }
 
     private Double CalcularHaversine(Location location) {

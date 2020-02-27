@@ -10,10 +10,10 @@ import androidx.annotation.NonNull;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Word.class, Event.class}, version = 1, exportSchema = false)
+@Database(entities = {Location.class, Event.class}, version = 1, exportSchema = false)
 public abstract class AppRoomDatabase extends RoomDatabase {
 
-   public abstract WordDao wordDao();
+   public abstract LocationDao locationDao();
    public abstract EventDao eventDao();
 
    private static volatile AppRoomDatabase INSTANCE;
