@@ -11,6 +11,7 @@ import android.content.Context;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import android.util.Log;
+import java.util.List;
 import io.cordova.hellocordova.*;
 
 public class ForegroundPlugin extends CordovaPlugin {
@@ -36,7 +37,7 @@ public class ForegroundPlugin extends CordovaPlugin {
         callback = callbackContext;
         if (ValidarPermissaoExecucao()) {
             if (action.equals("start")) {
-                startService();
+                startService(args.getString(4), args.getString(5), args.getString(6), args.getString(7));
             } else if (action.equals("stop")) {
                 stopService();
             } else if (action.equals("verifyPermissions")) {
@@ -47,6 +48,8 @@ public class ForegroundPlugin extends CordovaPlugin {
                 getEvents();
             } else if (action.equals("getLocations")) {
                 getLocations();
+            } else if (action.equals("updateSyncLocations")) {
+                updateSyncLocations(args.getInteger(0));
             } else {
                 callback.error("Invalid action: " + action);
             };
@@ -56,10 +59,14 @@ public class ForegroundPlugin extends CordovaPlugin {
         return true;
     }
 
-    private void startService() {
+    private void startService(String latitude, String longitude, Integer tempo_captura, Integer distancia_captura) {
         Activity activity = cordova.getActivity();
         Intent serviceIntent = new Intent(activity, ForegroundService.class);
         serviceIntent.putExtra("inputExtra", "Foreground Service Example in Android");
+        serviceIntent.putExtra("latitude", latitude);
+        serviceIntent.putExtra("longitude", longitude);
+        serviceIntent.putExtra("tempo_captura", tempo_captura);
+        serviceIntent.putExtra("distancia_captura", distancia_captura);
         ContextCompat.startForegroundService(activity, serviceIntent);
     }
 
@@ -120,7 +127,17 @@ public class ForegroundPlugin extends CordovaPlugin {
 
             callback.success(array);
         } catch (Exception e){
-            callback.error("Error in action: getEvents: " + e);
+            callback.error("Error in action: getLocations: " + e);
         }
     }
+
+    private void updateSyncLocations(Integer idFrete){
+        try{
+            LocationRepository locationBD = new LocationRepository(context);
+            locationBD.updateSyncLocations(idFrete);
+            callback.success("Success");
+        } catch (Exception e){
+            callback.error("Error in action: getLocations: " + e);
+        }
+    }    
 }

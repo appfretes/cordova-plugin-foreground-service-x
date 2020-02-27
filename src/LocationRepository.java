@@ -21,6 +21,12 @@ class LocationRepository {
         return locationDao.getAll();
     }
 
+    void updateSyncLocations(Integer idFrete){
+        AppRoomDatabase.databaseWriteExecutor.execute(() -> {
+            locationDao.updateSyncLocations(idFrete);
+        });
+    }
+
     void insert(Location location) {
         AppRoomDatabase.databaseWriteExecutor.execute(() -> {
             Integer auxId = 1;

@@ -21,4 +21,7 @@ public interface LocationDao {
 
    @Query("SELECT * FROM location ORDER BY id DESC LIMIT 1")
    Location findLast();
+
+   @Query("UPDATE location SET sincronizado = 'Sim' WHERE id_frete = :idFrete")
+   void updateSyncLocations(Integer idFrete);
 }

@@ -22,6 +22,10 @@ public class LocationGPS extends Service implements LocationListener {
     private LocationManager locationManager = null;
     private int MIN_TIME_BW_UPDATES = 10000;
     private int MIN_DISTANCE_CHANGE_FOR_UPDATES = 50;
+    private String LATITUDE;
+    private String LONGITUDE;
+    private int TEMPO_CAPTURA;
+    private int DISTANCIA_CAPTURA;
     private static final String TAG = "SoftnielsLogger";
     private Context context;
     private LocationRepository locationBD;
@@ -31,9 +35,23 @@ public class LocationGPS extends Service implements LocationListener {
         locationManager.removeUpdates(this);
     }
 
-    public void StartTrackLocation(Context context) {
+    public void StartTrackLocation(Context context, Bundle extras) {
         this.context = context;
         locationBD = new LocationRepository(this.context);
+
+        LATITUDE = extras.get("latitude");
+        LONGITUDE = extras.get("longitude");
+        try {
+            TEMPO_CAPTURA = Integer.parseInt((String) extras.get("tempo_captura"));
+        } catch (NumberFormatException e) {
+            TEMPO_CAPTURA = MIN_TIME_BW_UPDATES;
+        }
+        try {
+            DISTANCIA_CAPTURA = Integer.parseInt((String) extras.get("distancia_captura"));
+        } catch (NumberFormatException e) {
+            DISTANCIA_CAPTURA = MIN_DISTANCE_CHANGE_FOR_UPDATES;
+        }
+
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         Location location = null;
         Boolean isGPSEnabled;
@@ -43,8 +61,8 @@ public class LocationGPS extends Service implements LocationListener {
                 if (ContextCompat.checkSelfPermission(context, ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                     locationManager.requestLocationUpdates(
                             LocationManager.GPS_PROVIDER,
-                            MIN_TIME_BW_UPDATES,
-                            MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+                            TEMPO_CAPTURA,
+                            DISTANCIA_CAPTURA, this);
                 }
             }
         }

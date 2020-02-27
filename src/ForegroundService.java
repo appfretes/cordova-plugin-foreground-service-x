@@ -43,7 +43,7 @@ public class ForegroundService extends Service {
         
         // Fazer capturas em segundo plano e gravar
         locationGPS = new LocationGPS();
-        locationGPS.StartTrackLocation(getBaseContext());
+        locationGPS.StartTrackLocation(getBaseContext(), intent.getExtras());
         // 
         // Verificar se entrou na cerca
         // 
