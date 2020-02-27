@@ -25,6 +25,7 @@ public class LocationGPS extends Service implements LocationListener {
     private int ID_FRETE = 0;
     private String DESTINO_LATITUDE;
     private String DESTINO_LONGITUDE;
+    private String DESTINO_RAIO;
     private int TEMPO_CAPTURA;
     private int DISTANCIA_CAPTURA;
     private static final String TAG = "SoftnielsLogger";
@@ -64,9 +65,10 @@ public class LocationGPS extends Service implements LocationListener {
         }
     }
 
-    public void setDestino(String latitude, String longitude){
+    public void setDestino(String latitude, String longitude, String raio){
         DESTINO_LATITUDE = latitude;
         DESTINO_LONGITUDE = longitude;
+        DESTINO_RAIO = raio;
     }
 
     public void setConfigLocation(String tempo_captura, String distancia_captura){
@@ -105,11 +107,16 @@ public class LocationGPS extends Service implements LocationListener {
         locationBD.insert(newLocation);
     }
 
-    private CalcularHaversine(Location location) {
+    private void CalcularHaversine(Location location) {
         Log.d(TAG, "VAI CALCULAR DISTANCIA");
-        double distancia = Haversine.haversine(DESTINO_LATITUDE, DESTINO_LONGITUDE, location.getLatitude(), location.getLongitude());
+        double distancia = Haversine.haversine(Double.valueOf(DESTINO_LATITUDE), Double.valueOf(DESTINO_LONGITUDE), location.getLatitude(), location.getLongitude());
         Log.d(TAG, "CALCULOU DISTANCIA");
+        double raio = Double.valueOf(DESTINO_RAIO);
         Log.d(TAG, Double.toString(distancia));
+        Log.d(TAG, "CALCULOU DISTANCIA x RAIO");
+        if (distancia < raio) {
+            Log.d(TAG, "ENTROU NA CERCA, DEVE ACORDAR");
+        };
         Log.d(TAG, "CALCULOU DISTANCIA FIM");
     }
 

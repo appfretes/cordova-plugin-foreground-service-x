@@ -44,7 +44,7 @@ public class ForegroundService extends Service {
         // Fazer capturas em segundo plano e gravar
         locationGPS = new LocationGPS();
         locationGPS.setFrete(intent.getStringExtra("id_frete"));
-        locationGPS.setDestino(intent.getStringExtra("latitude"), intent.getStringExtra("longitude"));
+        locationGPS.setDestino(intent.getStringExtra("latitude"), intent.getStringExtra("longitude"), intent.getStringExtra("raio"));
         locationGPS.setConfigLocation(intent.getStringExtra("tempo_captura"), intent.getStringExtra("distancia_captura"));
         locationGPS.StartTrackLocation(getBaseContext());
         // 
