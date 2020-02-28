@@ -1,7 +1,9 @@
 package com.softniels.foregroundservicex;
 
 import android.app.Service;
+import android.app.Activity;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -11,6 +13,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
+import android.net.Uri;
 
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
@@ -40,7 +43,6 @@ public class LocationGPS extends Service implements LocationListener {
     public void StartTrackLocation(Context context) {
         this.context = context;
         locationBD = new LocationRepository(this.context);
-
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         Location location = null;
         Boolean isGPSEnabled;
@@ -108,17 +110,32 @@ public class LocationGPS extends Service implements LocationListener {
     }
 
     private void CalcularHaversine(Location location) {
-        Log.d(TAG, "VAI CALCULAR DISTANCIA");
         double distancia = Haversine.haversine(Double.valueOf(DESTINO_LATITUDE), Double.valueOf(DESTINO_LONGITUDE), location.getLatitude(), location.getLongitude());
-        Log.d(TAG, "CALCULOU DISTANCIA");
         double raio = Double.valueOf(DESTINO_RAIO);
         Log.d(TAG, Double.toString(distancia));
         Log.d(TAG, "CALCULOU DISTANCIA x RAIO");
         if (distancia < raio) {
             Log.d(TAG, "ENTROU NA CERCA, DEVE ACORDAR");
+            AcordarCelular();
         };
         Log.d(TAG, "CALCULOU DISTANCIA FIM");
     }
+
+    private void AcordarCelular(){
+        try {
+            //Intent intent = new Intent(myService, io.cordova.hellocordova.MainActivity.class);
+            //String pkgName    = "io.cordova.hellocordova";
+            //Intent intent = new Intent();
+            //intent.setData(Uri.parse("package:" + pkgName));
+            //intent.setAction(Intent.ACTION_VIEW);
+            Intent intent = new Intent(this.context, io.cordova.hellocordova.MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            this.context.startActivity(intent);
+        } catch (Exception e) {
+            Log.d(TAG, "ERROR AO ACORDAR " + e);
+        }
+    };
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {

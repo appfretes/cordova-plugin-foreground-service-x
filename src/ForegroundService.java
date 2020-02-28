@@ -31,6 +31,10 @@ public class ForegroundService extends Service {
         String input = intent.getStringExtra("inputExtra");
         createNotificationChannel();
         Intent notificationIntent = new Intent(ForegroundService.this, io.cordova.hellocordova.MainActivity.class);
+        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        // notificationIntent.setAction("android.intent.action.MAIN");
+        // notificationIntent.addCategory("android.intent.category.LAUNCHER");
+
         PendingIntent pendingIntent = PendingIntent.getActivity(context,
                 0, notificationIntent, 0);
         Notification notification = new NotificationCompat.Builder(context, CHANNEL_ID)
@@ -38,23 +42,17 @@ public class ForegroundService extends Service {
                 .setContentText(input)
                 //.setSmallIcon(R.mipmap.ic_launcher)
                 .setContentIntent(pendingIntent)
+                .setOngoing(true)
                 .build();
         startForeground(1, notification);
         
         // Fazer capturas em segundo plano e gravar
         locationGPS = new LocationGPS();
-        locationGPS.setFrete(intent.getStringExtra("id_frete"));
+        locationGPS.setFrete(intent.getStringExtra("id_frete"));        
         locationGPS.setDestino(intent.getStringExtra("latitude"), intent.getStringExtra("longitude"), intent.getStringExtra("raio"));
         locationGPS.setConfigLocation(intent.getStringExtra("tempo_captura"), intent.getStringExtra("distancia_captura"));
         locationGPS.StartTrackLocation(getBaseContext());
-        // 
         // Verificar se entrou na cerca
-        // 
-        // Sincronizar eventos
-        //SyncEvents sincronizador = new SyncEvents(context);
-        //sincronizador.sincronizarEventos();
-        //sincronizador.testeBD();
-
         //do heavy work on a background thread
         //stopSelf();
         return START_NOT_STICKY;
