@@ -18,6 +18,9 @@ import android.net.Uri;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
 public class LocationGPS extends Service implements LocationListener {
@@ -110,15 +113,9 @@ public class LocationGPS extends Service implements LocationListener {
     public void onLocationChanged(Location location) {
         InsertLatitudeLongitude(location);
         CalcularHaversine(location);
-        Log.i(TAG, "INSERIU LOCALIZAÇÃO");
-        Log.i(TAG, "CONTADOR_ENVIO: " + String.valueOf(CONTADOR_ENVIO));
         CONTADOR_ENVIO = CONTADOR_ENVIO + 1;
-        Log.i(TAG, "CONTADOR_ENVIO: " + String.valueOf(CONTADOR_ENVIO));
-        Log.i(TAG, "TEMPO_ENVIO: " + String.valueOf(TEMPO_ENVIO));
         if (TEMPO_ENVIO == CONTADOR_ENVIO){
-            Log.i(TAG, "VAI ENVIAR LOCALIZACAO: ");
             SendLocation();
-            Log.i(TAG, "ENVIOU LOCALIZACAO: ");
             CONTADOR_ENVIO = 0;
         };
     }
@@ -137,9 +134,15 @@ public class LocationGPS extends Service implements LocationListener {
             ID_FRETE,
             Double.toString(location.getLatitude()),
             Double.toString(location.getLongitude()),
-            Double.toString(location.getTime())
+            convertDate(location.getTime())
         );
         locationBD.insert(newLocation);
+    }
+
+    private String convertDate(Long milliseconds){
+        Date d = new Date(milliseconds);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(d);
     }
 
     private void CalcularHaversine(Location location) {

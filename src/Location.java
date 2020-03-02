@@ -22,17 +22,17 @@ public class Location {
    @ColumnInfo(name = "longitude")
    private String longitude;
 
-   @ColumnInfo(name = "data_transacao")
-   private String data_transacao;
+   @ColumnInfo(name = "data_captura")
+   private String data_captura;
 
    @ColumnInfo(name = "sincronizado")
    private String sincronizado; // Sim/Não
 
-   public Location(Integer id_frete, String latitude, String longitude, String data_transacao) {
+   public Location(Integer id_frete, String latitude, String longitude, String data_captura) {
       this.id_frete = id_frete;
       this.latitude = latitude;
       this.longitude = longitude;
-      this.data_transacao = data_transacao;
+      this.data_captura = data_captura;
       this.sincronizado = "Não";
    }
    
@@ -40,7 +40,7 @@ public class Location {
    public Integer id_frete(){return this.id_frete;}
    public String latitude(){return this.latitude;}
    public String longitude(){return this.longitude;}
-   public String data_transacao(){return this.data_transacao;}
+   public String data_captura(){return this.data_captura;}
    public String sincronizado(){return this.sincronizado;}
    public void setId(Integer id){
       this.id = id;

@@ -84,6 +84,7 @@ class LocationRepository {
                 auxId = auxLocation.id() + 1;
             };
             location.setId(auxId);
+            //location.setSincronizado("Não");
             locationDao.insert(location);
         });
     }

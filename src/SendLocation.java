@@ -6,10 +6,14 @@ import java.io.IOException;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import okhttp3.Response;
+import okhttp3.Headers;
 import okhttp3.MediaType;
-import android.util.Log;
+import okhttp3.Call;
+import okhttp3.Callback;
 
+import android.util.Log;
 import com.google.gson.Gson;
 
 import android.content.Context;
@@ -30,15 +34,10 @@ public class SendLocation {
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public String post(Integer idFrete, String url, String token) throws IOException {
-        String responseString;
-        Integer responseCode;
-        String jsonBody;
-
         // Buscar localizações e converter para string        
-        jsonBody = locationBD.getAllPendingString(idFrete);
-        Log.i("SoftnielsLogger", "RequestBody jsonBody: " + jsonBody);
+        String bodyString = locationBD.getAllPendingString(idFrete);
         // Criar corpo
-        RequestBody body = RequestBody.create(JSON, jsonBody);
+        RequestBody body = RequestBody.create(JSON, bodyString);
         // Criar requisição
         Request request = new Request.Builder()
                 .header("Authentication", token)
@@ -46,22 +45,29 @@ public class SendLocation {
                 .post(body)
                 .build();
 
-        try (Response response = client.newCall(request).execute()) {
-            responseCode = response.code();
-            responseString = response.body().string();
-            // Gson gson = new Gson();
-            // ResponseEntity responseEntity = gson.fromJson(responseString, ResponseEntity.class);
-            // Log.i("SoftnielsLogger", "responseEntity.message: " + responseEntity.getMessage());
-            // Log.i("SoftnielsLogger", "responseEntity.reasonstring: " + String.valueOf(responseEntity.getReasonsString()));
-            // Log.i("SoftnielsLogger", "responseEntity.statuscode: " + String.valueOf(responseEntity.getStatusCode()));
-            if (responseCode != 200){
-                IllegalArgumentException erro = new IllegalArgumentException("Erro ao realizar requisição: " + responseString);
-                throw erro;
-            };
-            
-            locationBD.updateSyncLocations(idFrete);
-
-            return responseString;
-        }
+        client.newCall(request).enqueue(new Callback() {
+            @Override public void onFailure(Call call, IOException e) {
+                Log.i("SoftnielsLogger", "Erro ao realizar requisição: ");
+                e.printStackTrace();
+            }
+            @Override public void onResponse(Call call, Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()) {
+                    if (!response.isSuccessful()) throw new IOException("Erro ao realizar requisição: " + response);
+                    //responseCode = response.code();
+                    //responseString = response.body().string();
+                    locationBD.updateSyncLocations(idFrete);
+                    // Headers responseHeaders = response.headers();
+                    // for (int i = 0, size = responseHeaders.size(); i < size; i++) {
+                    //     System.out.println(responseHeaders.name(i) + ": " + responseHeaders.value(i));
+                    // }
+                }
+            }
+        });
+        return "teste";
+        //     // Gson gson = new Gson();
+        //     // ResponseEntity responseEntity = gson.fromJson(responseString, ResponseEntity.class);
+        //     // Log.i("SoftnielsLogger", "responseEntity.message: " + responseEntity.getMessage());
+        //     // Log.i("SoftnielsLogger", "responseEntity.reasonstring: " + String.valueOf(responseEntity.getReasonsString()));
+        //     // Log.i("SoftnielsLogger", "responseEntity.statuscode: " + String.valueOf(responseEntity.getStatusCode()));
     }
 }
