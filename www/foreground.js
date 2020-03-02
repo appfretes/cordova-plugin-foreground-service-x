@@ -12,8 +12,8 @@ var exec = require('cordova/exec');
   exports.insertEvent = function(success, error, id, event, value){
     exec(success, error, "ForegroundPlugin", "insertEvent", [id || "", event || "", value || ""]);
   };
-  exports.getEvents = function(success, error) {
-    exec(success, error, "ForegroundPlugin", "getEvents", []);
+  exports.getEvents = function(success, error, id_frete) {
+    exec(success, error, "ForegroundPlugin", "getEvents", [id_frete || ""]);
   };
   exports.getLocations = function(success, error) {
     exec(success, error, "ForegroundPlugin", "getLocations", []);
