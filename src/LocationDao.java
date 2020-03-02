@@ -19,10 +19,13 @@ public interface LocationDao {
    @Query("SELECT * FROM location")
    List<Location> getAll();
 
+   @Query("SELECT * FROM location WHERE id_frete = :idFrete and sincronizado <> 'Sim'")
+   List<Location> getAllPending(Integer idFrete);
+
    @Query("SELECT * FROM location ORDER BY id DESC LIMIT 1")
    Location findLast();
 
-   @Query("UPDATE location SET sincronizado = 'Sim' WHERE id_frete = :idFrete")
+   @Query("UPDATE location SET sincronizado = 'Sim' WHERE id_frete = :idFrete and sincronizado <> 'Sim'")
    void updateSyncLocations(Integer idFrete);
 
    @Query("DELETE FROM location WHERE id_frete = :idFrete")

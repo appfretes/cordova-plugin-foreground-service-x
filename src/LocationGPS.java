@@ -29,7 +29,11 @@ public class LocationGPS extends Service implements LocationListener {
     private String DESTINO_LATITUDE;
     private String DESTINO_LONGITUDE;
     private String DESTINO_RAIO;
+    private String URL;
+    private String TOKEN;
     private int TEMPO_CAPTURA;
+    private int TEMPO_ENVIO = 2;
+    private int CONTADOR_ENVIO = 0;
     private int DISTANCIA_CAPTURA;
     private static final String TAG = "SoftnielsLogger";
     private Context context;
@@ -86,6 +90,16 @@ public class LocationGPS extends Service implements LocationListener {
         }
     }
 
+    public void setConfigSync(String tempo_envio, String url, String token){
+        try {
+            TEMPO_ENVIO = Integer.parseInt((String) tempo_envio);
+        } catch (NumberFormatException e) {
+            TEMPO_ENVIO = 2;
+        }
+        URL = url;
+        TOKEN = token;
+    }
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -95,8 +109,20 @@ public class LocationGPS extends Service implements LocationListener {
     @Override
     public void onLocationChanged(Location location) {
         InsertLatitudeLongitude(location);
-        //Calcular cerca
         CalcularHaversine(location);
+        CONTADOR_ENVIO = CONTADOR_ENVIO + 1;
+        if (TEMPO_ENVIO == CONTADOR_ENVIO){
+            SendLocation();
+            CONTADOR_ENVIO = 0;
+        };
+    }
+
+    private void SendLocation(){
+        try{
+            SendLocation sendLocation = new SendLocation(context);
+            String responseString = sendLocation.post(ID_FRETE, URL, TOKEN);
+        } catch (Exception e){
+        }        
     }
 
     private void InsertLatitudeLongitude(Location location) {

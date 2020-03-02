@@ -37,7 +37,7 @@ public class ForegroundPlugin extends CordovaPlugin {
         callback = callbackContext;
         if (ValidarPermissaoExecucao()) {
             if (action.equals("start")) {
-                startService(args.getString(5), args.getString(6), args.getString(7), args.getString(8), args.getString(9), args.getString(10));
+                startService(args.getString(5), args.getString(6), args.getString(7), args.getString(8), args.getString(9), args.getString(10), args.getString(11));
             } else if (action.equals("stop")) {
                 stopService();
             } else if (action.equals("verifyPermissions")) {
@@ -63,7 +63,7 @@ public class ForegroundPlugin extends CordovaPlugin {
         return true;
     }
 
-    private void startService(String id_frete, String latitude, String longitude, String tempo_captura, String distancia_captura, String raio) {
+    private void startService(String id_frete, String latitude, String longitude, String tempo_captura, String tempo_envio, String distancia_captura, String raio) {
         Activity activity = cordova.getActivity();
         Intent serviceIntent = new Intent(activity, ForegroundService.class);
         serviceIntent.putExtra("inputExtra", "Foreground Service Example in Android");
@@ -71,6 +71,7 @@ public class ForegroundPlugin extends CordovaPlugin {
         serviceIntent.putExtra("latitude", latitude);
         serviceIntent.putExtra("longitude", longitude);
         serviceIntent.putExtra("tempo_captura", tempo_captura);
+        serviceIntent.putExtra("tempo_envio", tempo_envio);
         serviceIntent.putExtra("distancia_captura", distancia_captura);
         serviceIntent.putExtra("raio", raio);
         ContextCompat.startForegroundService(activity, serviceIntent);
@@ -115,25 +116,24 @@ public class ForegroundPlugin extends CordovaPlugin {
     private void getLocations(){
         try{
             LocationRepository locationBD = new LocationRepository(context);
-            List<Location> locationList = locationBD.getAll();
-            JSONArray array = new JSONArray();
+            // List<Location> locationList = locationBD.getAll();
+            // JSONArray array = new JSONArray();
         
-            for (int i = 0; i <= locationList.size() - 1; i++) {
-                try {
-                    JSONObject obj = new JSONObject();
-                    obj.put("id", String.valueOf(locationList.get(i).getId()));
-                    obj.put("idFrete", String.valueOf(locationList.get(i).getIdFrete()));
-                    obj.put("latitude", locationList.get(i).getLatitude());
-                    obj.put("longitude", locationList.get(i).getLongitude());
-                    obj.put("dataTransacao", locationList.get(i).getDataTransacao());
-                    obj.put("sincronizado", locationList.get(i).getSincronizado());
-                    array.put(obj);
-                } catch (JSONException e) {
-                    Log.d(TAG, "Erro: " + e);
-                }
-            };
-
-            callback.success(array);
+            // for (int i = 0; i <= locationList.size() - 1; i++) {
+            //     try {
+            //         JSONObject obj = new JSONObject();
+            //         obj.put("id", String.valueOf(locationList.get(i).getId()));
+            //         obj.put("idFrete", String.valueOf(locationList.get(i).getIdFrete()));
+            //         obj.put("latitude", locationList.get(i).getLatitude());
+            //         obj.put("longitude", locationList.get(i).getLongitude());
+            //         obj.put("dataCaptura", locationList.get(i).getDataCaptura());
+            //         obj.put("sincronizado", locationList.get(i).getSincronizado());
+            //         array.put(obj);
+            //     } catch (JSONException e) {
+            //         Log.d(TAG, "Erro: " + e);
+            //     }
+            // };
+            callback.success("Sucess string: " + locationBD.getAllString());
         } catch (Exception e){
             callback.error("Error in action: getLocations: " + e);
         }
@@ -160,10 +160,9 @@ public class ForegroundPlugin extends CordovaPlugin {
     }
 
     private void sendLocations(Integer idFrete, String url, String token){
-        String responseString;
         try{
-            SendLocation sendLocation = new SendLocation();
-            responseString = sendLocation.post(idFrete, url, token);
+            SendLocation sendLocation = new SendLocation(context);
+            String responseString = sendLocation.post(idFrete, url, token);
             callback.success("Success in action: sendLocations: " + responseString);
         } catch (Exception e){
             callback.error("Error in action: sendLocations: " + e);

@@ -3,8 +3,8 @@ var exec = require('cordova/exec');
   exports.verifyPermissions = function(success, error){
     exec(success, error, "ForegroundPlugin", "verifyPermissions", []);
   };
-  exports.start = function(success, error, title, text, icon, importance, notificationId, idFrete, latitude, longitude, tempo_captura, distancia_captura, radius){
-    exec(success, error, "ForegroundPlugin", "start", [title || "", text || "", icon || "", importance || "1", notificationId || "", idFrete || "", latitude || "", longitude || "", tempo_captura || "", distancia_captura || "", radius || ""]);
+  exports.start = function(success, error, title, text, icon, importance, notificationId, idFrete, latitude, longitude, tempo_captura, tempo_envio, distancia_captura, radius){
+    exec(success, error, "ForegroundPlugin", "start", [title || "", text || "", icon || "", importance || "1", notificationId || "", idFrete || "", latitude || "", longitude || "", tempo_captura || "", tempo_envio || "", distancia_captura || "", radius || ""]);
   };
   exports.stop = function(){
     exec(null, null, "ForegroundPlugin", "stop", []);

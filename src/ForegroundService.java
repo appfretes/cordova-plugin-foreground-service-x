@@ -46,13 +46,17 @@ public class ForegroundService extends Service {
                 .build();
         startForeground(1, notification);
         
+        // intent.getStringExtra("tempo_envio")
         // Fazer capturas em segundo plano e gravar
         locationGPS = new LocationGPS();
-        locationGPS.setFrete(intent.getStringExtra("id_frete"));        
+        locationGPS.setFrete(intent.getStringExtra("id_frete"));
         locationGPS.setDestino(intent.getStringExtra("latitude"), intent.getStringExtra("longitude"), intent.getStringExtra("raio"));
         locationGPS.setConfigLocation(intent.getStringExtra("tempo_captura"), intent.getStringExtra("distancia_captura"));
+        locationGPS.setConfigSync(intent.getStringExtra("tempo_envio"), intent.getStringExtra("url"), intent.getStringExtra("token"));
         locationGPS.StartTrackLocation(getBaseContext());
         // Verificar se entrou na cerca
+        // Enviar capturas
+        // Enviar eventos
         //do heavy work on a background thread
         //stopSelf();
         return START_NOT_STICKY;
