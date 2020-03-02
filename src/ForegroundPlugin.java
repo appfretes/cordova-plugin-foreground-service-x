@@ -52,6 +52,8 @@ public class ForegroundPlugin extends CordovaPlugin {
                 updateSyncLocations(args.getInt(0));
             } else if (action.equals("deleteSyncLocations")) {
                 deleteSyncLocations(args.getInt(0));
+            } else if (action.equals("sendLocations")) {
+                sendLocations(args.getInt(0), args.getString(1), args.getString(2));
             } else {
                 callback.error("Invalid action: " + action);
             };
@@ -154,6 +156,17 @@ public class ForegroundPlugin extends CordovaPlugin {
             callback.success("Success");
         } catch (Exception e){
             callback.error("Error in action: deleteSyncLocations: " + e);
+        }
+    }
+
+    private void sendLocations(Integer idFrete, String url, String token){
+        String responseString;
+        try{
+            SendLocation sendLocation = new SendLocation(url, token);
+            responseString = sendLocation.post(idFrete, url, token);
+            callback.success("Success in action: sendLocations: " + responseString);
+        } catch (Exception e){
+            callback.error("Error in action: sendLocations: " + e);
         }
     }
 }
