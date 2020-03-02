@@ -37,7 +37,7 @@ public class ForegroundPlugin extends CordovaPlugin {
         callback = callbackContext;
         if (ValidarPermissaoExecucao()) {
             if (action.equals("start")) {
-                startService(args.getString(5), args.getString(6), args.getString(7), args.getString(8), args.getString(9), args.getString(10), args.getString(11));
+                startService(args.getString(5), args.getString(6), args.getString(7), args.getString(8), args.getString(9), args.getString(10), args.getString(11), args.getString(12), args.getString(13));
             } else if (action.equals("stop")) {
                 stopService();
             } else if (action.equals("verifyPermissions")) {
@@ -63,7 +63,7 @@ public class ForegroundPlugin extends CordovaPlugin {
         return true;
     }
 
-    private void startService(String id_frete, String latitude, String longitude, String tempo_captura, String tempo_envio, String distancia_captura, String raio) {
+    private void startService(String id_frete, String latitude, String longitude, String tempo_captura, String tempo_envio, String distancia_captura, String raio, String url, String token) {
         Activity activity = cordova.getActivity();
         Intent serviceIntent = new Intent(activity, ForegroundService.class);
         serviceIntent.putExtra("inputExtra", "Foreground Service Example in Android");
@@ -74,6 +74,8 @@ public class ForegroundPlugin extends CordovaPlugin {
         serviceIntent.putExtra("tempo_envio", tempo_envio);
         serviceIntent.putExtra("distancia_captura", distancia_captura);
         serviceIntent.putExtra("raio", raio);
+        serviceIntent.putExtra("url", url);
+        serviceIntent.putExtra("token", token);
         ContextCompat.startForegroundService(activity, serviceIntent);
     }
 

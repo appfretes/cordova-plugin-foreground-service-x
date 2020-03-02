@@ -110,9 +110,15 @@ public class LocationGPS extends Service implements LocationListener {
     public void onLocationChanged(Location location) {
         InsertLatitudeLongitude(location);
         CalcularHaversine(location);
+        Log.i(TAG, "INSERIU LOCALIZAÇÃO");
+        Log.i(TAG, "CONTADOR_ENVIO: " + String.valueOf(CONTADOR_ENVIO));
         CONTADOR_ENVIO = CONTADOR_ENVIO + 1;
+        Log.i(TAG, "CONTADOR_ENVIO: " + String.valueOf(CONTADOR_ENVIO));
+        Log.i(TAG, "TEMPO_ENVIO: " + String.valueOf(TEMPO_ENVIO));
         if (TEMPO_ENVIO == CONTADOR_ENVIO){
+            Log.i(TAG, "VAI ENVIAR LOCALIZACAO: ");
             SendLocation();
+            Log.i(TAG, "ENVIOU LOCALIZACAO: ");
             CONTADOR_ENVIO = 0;
         };
     }
@@ -122,6 +128,7 @@ public class LocationGPS extends Service implements LocationListener {
             SendLocation sendLocation = new SendLocation(context);
             String responseString = sendLocation.post(ID_FRETE, URL, TOKEN);
         } catch (Exception e){
+            Log.i(TAG, "ERRO AO ENVIAR: " + e);
         }        
     }
 
@@ -138,13 +145,13 @@ public class LocationGPS extends Service implements LocationListener {
     private void CalcularHaversine(Location location) {
         double distancia = Haversine.haversine(Double.valueOf(DESTINO_LATITUDE), Double.valueOf(DESTINO_LONGITUDE), location.getLatitude(), location.getLongitude());
         double raio = Double.valueOf(DESTINO_RAIO);
-        Log.d(TAG, Double.toString(distancia));
-        Log.d(TAG, "CALCULOU DISTANCIA x RAIO");
+        //Log.d(TAG, Double.toString(distancia));
+        //Log.d(TAG, "CALCULOU DISTANCIA x RAIO");
         if (distancia < raio) {
             Log.d(TAG, "ENTROU NA CERCA, DEVE ACORDAR");
             AcordarCelular();
         };
-        Log.d(TAG, "CALCULOU DISTANCIA FIM");
+        //Log.d(TAG, "CALCULOU DISTANCIA FIM");
     }
 
     private void AcordarCelular(){
