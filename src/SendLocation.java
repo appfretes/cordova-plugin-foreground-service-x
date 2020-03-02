@@ -5,7 +5,11 @@ import androidx.annotation.RequiresApi;
 import java.io.IOException;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
+import okhttp3.MediaType;
+
+import com.google.gson.Gson;
 
 public class SendLocation {
     private OkHttpClient client = new OkHttpClient();
@@ -29,6 +33,13 @@ public class SendLocation {
             // } else {
             //     callback.error("Error in action: testeteste 123: " + responseString);
             // }
+
+            Gson gson = new Gson();
+            ResponseEntity responseEntity = gson.fromJson(value, ResponseEntity.class);
+            Log.i("SoftnielsLogger", "responseEntity.message: " + responseEntity.getMessage());
+            Log.i("SoftnielsLogger", "responseEntity.reasonstring: " + String.valueOf(responseEntity.getReasonsString()));
+            Log.i("SoftnielsLogger", "responseEntity.statuscode: " + String.valueOf(responseEntity.getStatusCode()));
+            //return responseEntity;
             return response.body().string();
         }
     }

@@ -162,7 +162,7 @@ public class ForegroundPlugin extends CordovaPlugin {
     private void sendLocations(Integer idFrete, String url, String token){
         String responseString;
         try{
-            SendLocation sendLocation = new SendLocation(url, token);
+            SendLocation sendLocation = new SendLocation();
             responseString = sendLocation.post(idFrete, url, token);
             callback.success("Success in action: sendLocations: " + responseString);
         } catch (Exception e){
