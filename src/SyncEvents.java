@@ -43,7 +43,7 @@ public class SyncEvents {
 
     public void insertEvent(Integer id, String event, String value) {
         EventRepository eventBD = new EventRepository(context);
-        Event newEvent = new Event(id, event, value);
+        Event newEvent = new Event(id, 0, event, value);
         eventBD.insert(newEvent);
     };
 
@@ -55,9 +55,9 @@ public class SyncEvents {
         for (int i = 0; i <= eventList.size() - 1; i++) {
             try {
                 JSONObject obj = new JSONObject();
-                obj.put("id", String.valueOf(eventList.get(i).getId()));
-                obj.put("event", eventList.get(i).getEvent());
-                obj.put("value", eventList.get(i).getValue());
+                obj.put("id", String.valueOf(eventList.get(i).id()));
+                obj.put("event", eventList.get(i).event());
+                obj.put("value", eventList.get(i).value());
                 array.put(obj);
             } catch (JSONException e) {
                 Log.d(TAG, "Erro: " + e);

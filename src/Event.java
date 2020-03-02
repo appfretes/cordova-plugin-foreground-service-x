@@ -14,21 +14,26 @@ public class Event {
    @ColumnInfo(name = "id")
    private Integer id;
 
+   @ColumnInfo(name = "id_frete")
+   private Integer id_frete;
+
    @ColumnInfo(name = "event")
    private String event;
 
    @ColumnInfo(name = "value")
    private String value;
 
-   public Event(Integer id, String event, String value) {
+   public Event(Integer id, Integer id_frete, String event, String value) {
     this.id = id;
+    this.id_frete = id_frete;
     this.event = event;
     this.value = value;
    }
    
-   public Integer getId(){return this.id;}
-   public String getEvent(){return this.event;}
-   public String getValue(){return this.value;}
+   public Integer id(){return this.id;}
+   public Integer id_frete(){return this.id_frete;}
+   public String event(){return this.event;}
+   public String value(){return this.value;}
    public void setId(Integer id){
       this.id = id;
    }

@@ -33,7 +33,7 @@ public class SendLocation {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public String post(Integer idFrete, String url, String token) throws IOException {
+    public void post(Integer idFrete, String url, String token) throws IOException {
         // Buscar localizações e converter para string        
         String bodyString = locationBD.getAllPendingString(idFrete);
         // Criar corpo
@@ -63,7 +63,6 @@ public class SendLocation {
                 }
             }
         });
-        return "teste";
         //     // Gson gson = new Gson();
         //     // ResponseEntity responseEntity = gson.fromJson(responseString, ResponseEntity.class);
         //     // Log.i("SoftnielsLogger", "responseEntity.message: " + responseEntity.getMessage());

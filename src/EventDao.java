@@ -19,6 +19,9 @@ public interface EventDao {
    @Query("SELECT * FROM event")
    List<Event> getAll();
 
+   @Query("SELECT * FROM event WHERE id_frete = :idFrete")
+   List<Event> getAll(Integer idFrete);   
+
    @Query("SELECT * FROM event LIMIT 1")
    Event findUnique();
 

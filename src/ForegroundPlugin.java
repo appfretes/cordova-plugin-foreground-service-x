@@ -45,7 +45,7 @@ public class ForegroundPlugin extends CordovaPlugin {
             } else if (action.equals("insertEvent")) {
                 insertEvent(args.getString(0), args.getString(1), args.getString(2));
             } else if (action.equals("getEvents")) {
-                getEvents();
+                getEvents(args.getInt(0));
             } else if (action.equals("getLocations")) {
                 getLocations();
             } else if (action.equals("updateSyncLocations")) {
@@ -106,10 +106,10 @@ public class ForegroundPlugin extends CordovaPlugin {
         }
     }
 
-    private void getEvents(){
+    private void getEvents(Integer id_frete){
         try{
-            SyncEvents sincronizador = new SyncEvents(context);
-            callback.success(sincronizador.getEvents());
+            EventRepository eventBD = new EventRepository(context);
+            callback.success(eventBD.getAllString(id_frete));
         } catch (Exception e){
             callback.error("Error in action: getEvents: " + e);
         }
@@ -164,8 +164,8 @@ public class ForegroundPlugin extends CordovaPlugin {
     private void sendLocations(Integer idFrete, String url, String token){
         try{
             SendLocation sendLocation = new SendLocation(context);
-            String responseString = sendLocation.post(idFrete, url, token);
-            callback.success("Success in action: sendLocations: " + responseString);
+            sendLocation.post(idFrete, url, token);
+            callback.success("Success in action: sendLocations");
         } catch (Exception e){
             callback.error("Error in action: sendLocations: " + e);
         }

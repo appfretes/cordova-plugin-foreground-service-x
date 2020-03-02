@@ -41,6 +41,7 @@ public class LocationGPS extends Service implements LocationListener {
     private static final String TAG = "SoftnielsLogger";
     private Context context;
     private LocationRepository locationBD;
+    private EventRepository eventBD;
 
     public void StopTrackLocation(Context context) {
         this.context = context;
@@ -50,6 +51,7 @@ public class LocationGPS extends Service implements LocationListener {
     public void StartTrackLocation(Context context) {
         this.context = context;
         locationBD = new LocationRepository(this.context);
+        eventBD = new EventRepository(this.context);
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         Location location = null;
         Boolean isGPSEnabled;
@@ -123,7 +125,7 @@ public class LocationGPS extends Service implements LocationListener {
     private void SendLocation(){
         try{
             SendLocation sendLocation = new SendLocation(context);
-            String responseString = sendLocation.post(ID_FRETE, URL, TOKEN);
+            sendLocation.post(ID_FRETE, URL, TOKEN);
         } catch (Exception e){
             Log.i(TAG, "ERRO AO ENVIAR: " + e);
         }        
@@ -139,6 +141,11 @@ public class LocationGPS extends Service implements LocationListener {
         locationBD.insert(newLocation);
     }
 
+    private void insertEvent(String evento) {
+        Event newEvent = new Event(0, ID_FRETE, evento, "");
+        eventBD.insert(newEvent);
+    }    
+
     private String convertDate(Long milliseconds){
         Date d = new Date(milliseconds);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -148,16 +155,13 @@ public class LocationGPS extends Service implements LocationListener {
     private void CalcularHaversine(Location location) {
         double distancia = Haversine.haversine(Double.valueOf(DESTINO_LATITUDE), Double.valueOf(DESTINO_LONGITUDE), location.getLatitude(), location.getLongitude());
         double raio = Double.valueOf(DESTINO_RAIO);
-        //Log.d(TAG, Double.toString(distancia));
-        //Log.d(TAG, "CALCULOU DISTANCIA x RAIO");
-        if (distancia < raio) {
-            Log.d(TAG, "ENTROU NA CERCA, DEVE ACORDAR");
-            AcordarCelular();
+        if (distancia <= raio) {
+            acordarCelular();
+            insertEvent("ENTROU_CERCA");
         };
-        //Log.d(TAG, "CALCULOU DISTANCIA FIM");
     }
 
-    private void AcordarCelular(){
+    private void acordarCelular(){
         try {
             //Intent intent = new Intent(myService, io.cordova.hellocordova.MainActivity.class);
             //String pkgName    = "io.cordova.hellocordova";
