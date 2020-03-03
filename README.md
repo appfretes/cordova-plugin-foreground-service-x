@@ -54,24 +54,24 @@ cordova.plugins.foregroundService.start(
     url,
     token
 )
-#cordova.plugins.foregroundService.start({
-#    sucess: Function,				
-#    error: Function,
-#    title: String,
-#    text: String,
-#    icon: String,
-#    importance: Int,
-#    notificationId: Int,
-#    idFrete: Int,
-#    latitude: String,
-#    longitude: String,
-#    tempo_captura: Int,
-#    tempo_envio: Int,
-#    distancia_captura: Int,
-#    radius: Int,
-#    url: String,
-#    token: String
-#})
+//#cordova.plugins.foregroundService.start({
+//#    sucess: Function,				
+//#    error: Function,
+//#    title: String,
+//#    text: String,
+//#    icon: String,
+//#    importance: Int,
+//#    notificationId: Int,
+//#    idFrete: Int,
+//#    latitude: String,
+//#    longitude: String,
+//#    tempo_captura: Int,
+//#    tempo_envio: Int,
+//#    distancia_captura: Int,
+//#    radius: Int,
+//#    url: String,
+//#    token: String
+//#})
 ```
 
 To disable the background mode:
