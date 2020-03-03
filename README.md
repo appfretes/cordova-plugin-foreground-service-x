@@ -66,15 +66,17 @@ cordova.plugins.foregroundService.start(
 //#    url: String,
 //#    token: String
 //#})
+
+// Traduzir(
+// Ao iniciar o serviço, será iniciada a:
+//  *Notificação de primeiro plano;
+//  *Captura de localização;
+//  *Cálculo da cerca;
+//  *Geração de eventos;
+//  *Envio de localizações para o servidor;
+// )
+
 ```
-Traduzir(
-Ao iniciar o serviço, será iniciada a:
- *Notificação de primeiro plano;
- *Captura de localização;
- *Cálculo da cerca;
- *Geração de eventos;
- *Envio de localizações para o servidor;
- )
 
 To disable the background mode:
 ```js
@@ -142,12 +144,12 @@ cordova.plugins.foregroundService.sendLocations(
     error,
     id_frete
 );
+//Traduzir(
+//Ao sincronizar as localizações, será:
+// *Enviadas localizações para o servidor definido préviamente;
+// *Atualizadas localizações no banco local com a informação de sincronizado = 'Sim';
+//)
 ```
-Traduzir(
-Ao sincronizar as localizações, será:
- *Enviadas localizações para o servidor definido préviamente;
- *Atualizadas localizações no banco local com a informação de sincronizado = 'Sim';
- )
 
 ### Unlock and wake-up
 A wake-up turns on the screen while unlocking moves the app to foreground even the device is locked.
