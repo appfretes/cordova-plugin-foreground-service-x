@@ -1,3 +1,12 @@
+# Pendências
+1* Fazer configuração do plugin, setando dados como api e token uma única vez, evitando passar diversas vezes como parametro em lugares diferentes.
+2* Fazer páginação no envio para evitar uma única transação com diversas coordenadas e eventos.
+3*
+4*
+5*
+6*
+
+
 # cordova-plugin-foreground-service-x
  Foreground service with notification in progress for AndroidX
 
@@ -156,7 +165,7 @@ A wake-up turns on the screen while unlocking moves the app to foreground even t
 
 Turn screen on and show app even locked
 ```js
-cordova.plugins.backgroundMode.unlock();
+cordova.plugins.foregroundService.unlock();
 ```
 
 
