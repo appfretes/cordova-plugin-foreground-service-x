@@ -23,8 +23,7 @@ public class Event {
    @ColumnInfo(name = "value")
    private String value;
 
-   public Event(Integer id, Integer id_frete, String event, String value) {
-    this.id = id;
+   public Event(Integer id_frete, String event, String value) {
     this.id_frete = id_frete;
     this.event = event;
     this.value = value;

@@ -63,6 +63,18 @@ public class ForegroundPlugin extends CordovaPlugin {
         return true;
     }
 
+    private void verifyPermissions(){
+        Permission.checkAccessFineLocation(context, cordova.getActivity());
+        Permission.checkAccessCoarseLocation(context, cordova.getActivity());
+    }
+
+    private boolean ValidarPermissaoExecucao() {
+        return (Permission.checkAccessFineLocation(context, cordova.getActivity()) &&
+                Permission.checkAccessCoarseLocation(context, cordova.getActivity())
+        );
+    }
+
+    // Service
     private void startService(String id_frete, String latitude, String longitude, String tempo_captura, String tempo_envio, String distancia_captura, String raio, String url, String token) {
         Activity activity = cordova.getActivity();
         Intent serviceIntent = new Intent(activity, ForegroundService.class);
@@ -79,33 +91,18 @@ public class ForegroundPlugin extends CordovaPlugin {
         ContextCompat.startForegroundService(activity, serviceIntent);
     }
 
-    private void verifyPermissions(){
-        Permission.checkAccessFineLocation(context, cordova.getActivity());
-        Permission.checkAccessCoarseLocation(context, cordova.getActivity());
-    }
-
-    private boolean ValidarPermissaoExecucao() {
-        return (Permission.checkAccessFineLocation(context, cordova.getActivity()) &&
-                Permission.checkAccessCoarseLocation(context, cordova.getActivity())
-        );
-    }    
-
     private void stopService() {
         // Activity activity = cordova.getActivity();
         // Intent serviceIntent = new Intent(ForegroundPlugin.this, ForegroundService.class);
         // stopService(serviceIntent);
     }
 
-    private void insertEvent(String id, String event, String value){
+    // Event
+    private void insertEvent(String id_frete, String event, String value){
         try {
-            Log.d(TAG, "INSERIR EVENTO 1 ");
             EventRepository eventBD = new EventRepository(context);
-            Log.d(TAG, "INSERIR EVENTO 2 ");
-            Event newEvent = new Event(Integer.parseInt(id), 1000, event, value);
-            Log.d(TAG, "INSERIR EVENTO 3 ");
+            Event newEvent = new Event(Integer.parseInt(id_frete), event, value);
             eventBD.insert(newEvent);
-            Log.d(TAG, "INSERIR EVENTO 4 ");
-
             callback.success("Sucess in action: insertEvent");
         } catch (Exception e) {
             callback.error("Error in action: insertEvent: " + e);
@@ -121,56 +118,40 @@ public class ForegroundPlugin extends CordovaPlugin {
         }
     }
 
+    // Locations
     private void getLocations(){
         try{
             LocationRepository locationBD = new LocationRepository(context);
-            // List<Location> locationList = locationBD.getAll();
-            // JSONArray array = new JSONArray();
-        
-            // for (int i = 0; i <= locationList.size() - 1; i++) {
-            //     try {
-            //         JSONObject obj = new JSONObject();
-            //         obj.put("id", String.valueOf(locationList.get(i).getId()));
-            //         obj.put("idFrete", String.valueOf(locationList.get(i).getIdFrete()));
-            //         obj.put("latitude", locationList.get(i).getLatitude());
-            //         obj.put("longitude", locationList.get(i).getLongitude());
-            //         obj.put("dataCaptura", locationList.get(i).getDataCaptura());
-            //         obj.put("sincronizado", locationList.get(i).getSincronizado());
-            //         array.put(obj);
-            //     } catch (JSONException e) {
-            //         Log.d(TAG, "Erro: " + e);
-            //     }
-            // };
             callback.success("Sucess string: " + locationBD.getAllString());
         } catch (Exception e){
             callback.error("Error in action: getLocations: " + e);
         }
     }
 
-    private void updateSyncLocations(Integer idFrete){
+    private void updateSyncLocations(Integer id_frete){
         try{
             LocationRepository locationBD = new LocationRepository(context);
-            locationBD.updateSyncLocations(idFrete);
+            locationBD.updateSyncLocations(id_frete);
             callback.success("Success");
         } catch (Exception e){
             callback.error("Error in action: updateSyncLocations: " + e);
         }
     }
 
-    private void deleteSyncLocations(Integer idFrete){
+    private void deleteSyncLocations(Integer id_frete){
         try{
             LocationRepository locationBD = new LocationRepository(context);
-            locationBD.deleteSyncLocations(idFrete);
+            locationBD.deleteSyncLocations(id_frete);
             callback.success("Success");
         } catch (Exception e){
             callback.error("Error in action: deleteSyncLocations: " + e);
         }
     }
 
-    private void sendLocations(Integer idFrete, String url, String token){
+    private void sendLocations(Integer id_frete, String url, String token){
         try{
             SendLocation sendLocation = new SendLocation(context);
-            sendLocation.post(idFrete, url, token);
+            sendLocation.post(id_frete, url, token);
             callback.success("Success in action: sendLocations");
         } catch (Exception e){
             callback.error("Error in action: sendLocations: " + e);

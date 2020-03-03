@@ -41,23 +41,14 @@ class EventRepository {
     // You must call this on a non-UI thread or your app will throw an exception. Room ensures
     // that you're not doing any long running operations on the main thread, blocking the UI.
     void insert(Event event) {
-        Log.d(TAG, "INSERIR EVENTO 1 EVENTO 1");
         AppRoomDatabase.databaseWriteExecutor.execute(() -> {
-            Log.d(TAG, "INSERIR EVENTO 1 EVENTO 2");
             Integer auxId = 1;
             Event auxEvent = eventDao.findLast();
-            Log.d(TAG, "INSERIR EVENTO 1 EVENTO 3");
             if (auxEvent != null){
-                Log.d(TAG, "INSERIR EVENTO 1 EVENTO 4");
                 auxId = auxEvent.id() + 1;
-                Log.d(TAG, "INSERIR EVENTO 1 EVENTO 5");
             };
-            Log.d(TAG, "INSERIR EVENTO 1 EVENTO 6");
             event.setId(auxId);
-            Log.d(TAG, "INSERIR EVENTO 1 EVENTO 7");
             eventDao.insert(event);
-            Log.d(TAG, "INSERIR EVENTO 1 EVENTO 8");
         });
-        Log.d(TAG, "INSERIR EVENTO 1 EVENTO 9");
     }
 }

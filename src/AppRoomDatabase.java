@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Location.class, Event.class}, version = 2, exportSchema = false)
+@Database(entities = {Location.class, Event.class}, version = 3, exportSchema = false)
 public abstract class AppRoomDatabase extends RoomDatabase {
 
    public abstract LocationDao locationDao();
@@ -28,6 +28,9 @@ public abstract class AppRoomDatabase extends RoomDatabase {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             AppRoomDatabase.class, "ojo")
                             .allowMainThreadQueries()
+                            .fallbackToDestructiveMigration() // Remover em produção e adicionar migração corretamente //
+                                // Ler mais em https://developer.android.com/training/data-storage/room/migrating-db-versions
+                                // Ler mais em https://medium.com/androiddevelopers/understanding-migrations-with-room-f01e04b07929
                             .build();
                 }
             }

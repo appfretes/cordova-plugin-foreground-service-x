@@ -142,7 +142,7 @@ public class LocationGPS extends Service implements LocationListener {
     }
 
     private void insertEvent(String evento) {
-        Event newEvent = new Event(0, ID_FRETE, evento, "");
+        Event newEvent = new Event(ID_FRETE, evento, "");
         eventBD.insert(newEvent);
     }    
 

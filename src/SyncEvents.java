@@ -41,29 +41,29 @@ public class SyncEvents {
     public void testeBD() {
     }
 
-    public void insertEvent(Integer id, String event, String value) {
-        EventRepository eventBD = new EventRepository(context);
-        Event newEvent = new Event(id, 0, event, value);
-        eventBD.insert(newEvent);
-    };
+    // public void insertEvent(Integer id, String event, String value) {
+    //     EventRepository eventBD = new EventRepository(context);
+    //     Event newEvent = new Event(0, event, value);
+    //     eventBD.insert(newEvent);
+    // };
 
-    public JSONArray getEvents() {
-        EventRepository eventBD = new EventRepository(context);
-        List<Event> eventList = eventBD.getAll();
-        JSONArray array = new JSONArray();
+    // public JSONArray getEvents() {
+    //     EventRepository eventBD = new EventRepository(context);
+    //     List<Event> eventList = eventBD.getAll();
+    //     JSONArray array = new JSONArray();
         
-        for (int i = 0; i <= eventList.size() - 1; i++) {
-            try {
-                JSONObject obj = new JSONObject();
-                obj.put("id", String.valueOf(eventList.get(i).id()));
-                obj.put("event", eventList.get(i).event());
-                obj.put("value", eventList.get(i).value());
-                array.put(obj);
-            } catch (JSONException e) {
-                Log.d(TAG, "Erro: " + e);
-            }
-        };
+    //     for (int i = 0; i <= eventList.size() - 1; i++) {
+    //         try {
+    //             JSONObject obj = new JSONObject();
+    //             obj.put("id", String.valueOf(eventList.get(i).id()));
+    //             obj.put("event", eventList.get(i).event());
+    //             obj.put("value", eventList.get(i).value());
+    //             array.put(obj);
+    //         } catch (JSONException e) {
+    //             Log.d(TAG, "Erro: " + e);
+    //         }
+    //     };
 
-        return array;
-    };
+    //     return array;
+    // };
 }
